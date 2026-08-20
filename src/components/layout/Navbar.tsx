@@ -29,7 +29,10 @@ export default function Navbar() {
         <ul className="hidden items-center gap-8 text-sm font-medium md:flex">
           {links.map((link) => (
             <li key={link.href}>
-              <Link href={link.href} className="hover:text-accent">
+              <Link
+                href={link.href}
+                className="nav-link hover:text-accent"
+              >
                 {link.label}
               </Link>
             </li>
