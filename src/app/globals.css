@@ -23,7 +23,8 @@ body {
 .nav-link {
   text-decoration: none;
   position: relative;
-  overflow: hidden;
+  display: inline-block;
+  padding-bottom: 6px;
 }
 
 .nav-link::after {
