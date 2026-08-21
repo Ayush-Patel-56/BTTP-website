@@ -12,7 +12,7 @@ const links = [
 export default function Navbar() {
   return (
     <header className="fixed inset-x-0 top-0 z-50 px-4 py-4">
-      <nav className="mx-auto flex max-w-5xl items-center justify-between gap-4 rounded-2xl border border-white/40 bg-white/25 px-4 py-2.5 shadow-lg shadow-black/10 backdrop-blur-xl">
+      <nav className="mx-auto flex max-w-5xl items-center justify-between gap-4 rounded-2xl border border-white/10 bg-neutral-700 px-4 py-2.5 shadow-lg shadow-black/20">
         <Link href="/" className="flex shrink-0 items-center gap-2">
           <span className="flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full ring-1 ring-black/10">
             <Image
@@ -26,7 +26,7 @@ export default function Navbar() {
           </span>
           <span className="text-lg font-semibold tracking-tight text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.3)]">BTTP</span>
         </Link>
-        <ul className="hidden items-center gap-8 text-sm font-medium text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.3)] md:flex">
+        <ul className="hidden items-center gap-8 text-sm font-semibold text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.3)] md:flex">
           {links.map((link) => (
             <li key={link.href}>
               <Link
