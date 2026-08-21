@@ -24,14 +24,14 @@ export default function Navbar() {
               priority
             />
           </span>
-          <span className="text-lg font-semibold tracking-tight text-black">BTTP</span>
+          <span className="text-lg font-semibold tracking-tight text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.3)]">BTTP</span>
         </Link>
-        <ul className="hidden items-center gap-8 text-sm font-medium text-black/90 md:flex">
+        <ul className="hidden items-center gap-8 text-sm font-medium text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.3)] md:flex">
           {links.map((link) => (
             <li key={link.href}>
               <Link
                 href={link.href}
-                className="nav-link hover:text-black"
+                className="nav-link hover:text-white"
               >
                 {link.label}
               </Link>
