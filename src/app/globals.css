@@ -52,3 +52,18 @@ body {
     width: 60%;
   }
 }
+
+.hero-reveal {
+  clip-path: inset(0 100% 0 0);
+  animation: hero-reveal 3.5s ease-out forwards;
+}
+
+.hero-reveal-delay-1 {
+  animation-delay: 0.6s;
+}
+
+@keyframes hero-reveal {
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
