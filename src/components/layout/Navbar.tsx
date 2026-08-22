@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 
 const links = [
   { href: "/point-calculator", label: "Point Calculator" },
@@ -10,8 +13,30 @@ const links = [
 ];
 
 export default function Navbar() {
+  const [hidden, setHidden] = useState(false);
+  const lastScrollY = useRef(0);
+
+  useEffect(() => {
+    lastScrollY.current = window.scrollY;
+
+    function handleScroll() {
+      const currentScrollY = window.scrollY;
+      const scrolledDown = currentScrollY > lastScrollY.current;
+
+      setHidden(scrolledDown && currentScrollY > 80);
+      lastScrollY.current = currentScrollY;
+    }
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <header className="fixed inset-x-0 top-0 z-50 px-4 py-4">
+    <header
+      className={`fixed inset-x-0 top-0 z-50 px-4 py-4 transition-transform duration-300 ${
+        hidden ? "-translate-y-[calc(100%+2rem)]" : "translate-y-0"
+      }`}
+    >
       <nav className="mx-auto flex max-w-5xl items-center justify-between gap-4 rounded-2xl border border-white/10 bg-neutral-700 px-4 py-2.5 shadow-lg shadow-black/20">
         <Link href="/" className="flex shrink-0 items-center gap-2">
           <span className="flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full ring-1 ring-black/10">
