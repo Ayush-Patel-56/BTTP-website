@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useMotionValue, useMotionValueEvent, useSpring } from "framer-motion";
 
 const items = [
   {
@@ -118,15 +119,20 @@ export default function IsThisForYou() {
     return () => window.removeEventListener("resize", computePath);
   }, []);
 
-  useEffect(() => {
-    // Reference line, as a fraction of viewport height, that each dot's
-    // reveal is measured against. Progress for a segment is how far the
-    // scroll has carried this line from the previous dot to the next one —
-    // so the draw always spans exactly the real distance between the two
-    // items instead of a fixed pixel/viewport window (which finishes too
-    // fast when items are far apart and looks like a jump-cut).
-    const ANCHOR_FRACTION = 0.72;
+  // Reference line, as a fraction of viewport height, that each dot's reveal
+  // is measured against. Raw scroll position feeds a spring (Framer Motion's
+  // useSpring) instead of driving the draw directly, so the line keeps
+  // gliding smoothly toward its target even after the scroll gesture stops —
+  // rather than freezing instantly on the last scroll event.
+  const ANCHOR_FRACTION = 0.72;
+  const rawAnchor = useMotionValue(0);
+  const smoothAnchor = useSpring(rawAnchor, {
+    stiffness: 120,
+    damping: 26,
+    restDelta: 0.5,
+  });
 
+  useEffect(() => {
     function measure() {
       pathLengths.current = pathRefs.current.map(
         (path) => path?.getTotalLength() ?? 0
@@ -138,55 +144,22 @@ export default function IsThisForYou() {
       });
     }
 
-    function updateProgress() {
-      const anchorDocY = window.scrollY + window.innerHeight * ANCHOR_FRACTION;
-      let revealedChanged = false;
-      const nextRevealed = revealedRef.current.slice();
-
-      pathRefs.current.forEach((path, index) => {
-        const totalLength = pathLengths.current[index];
-        const startY = dotDocY.current[index];
-        const endY = dotDocY.current[index + 1];
-        if (!path || !totalLength || startY === endY) return;
-
-        const rawProgress = (anchorDocY - startY) / (endY - startY);
-        const progress = Math.min(1, Math.max(0, rawProgress));
-
-        path.style.strokeDasharray = buildDashArray(totalLength, progress);
-        path.style.markerEnd = progress > 0.97 ? "url(#connector-arrow)" : "none";
-
-        const itemIndex = index + 1;
-        if (progress >= 0.92 && !nextRevealed[itemIndex]) {
-          nextRevealed[itemIndex] = true;
-          revealedChanged = true;
-        } else if (progress < 0.3 && nextRevealed[itemIndex]) {
-          nextRevealed[itemIndex] = false;
-          revealedChanged = true;
-        }
-      });
-
-      if (revealedChanged) {
-        revealedRef.current = nextRevealed;
-        setRevealed(nextRevealed);
-      }
+    function currentAnchor() {
+      return window.scrollY + window.innerHeight * ANCHOR_FRACTION;
     }
 
     measure();
-    updateProgress();
+    rawAnchor.set(currentAnchor());
+    smoothAnchor.jump(currentAnchor());
 
-    let ticking = false;
     function onScroll() {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(() => {
-        updateProgress();
-        ticking = false;
-      });
+      rawAnchor.set(currentAnchor());
     }
 
     function onResize() {
       measure();
-      updateProgress();
+      rawAnchor.set(currentAnchor());
+      smoothAnchor.jump(currentAnchor());
     }
 
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -195,7 +168,39 @@ export default function IsThisForYou() {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onResize);
     };
-  }, [segments]);
+  }, [segments, rawAnchor, smoothAnchor]);
+
+  useMotionValueEvent(smoothAnchor, "change", (anchorDocY) => {
+    let revealedChanged = false;
+    const nextRevealed = revealedRef.current.slice();
+
+    pathRefs.current.forEach((path, index) => {
+      const totalLength = pathLengths.current[index];
+      const startY = dotDocY.current[index];
+      const endY = dotDocY.current[index + 1];
+      if (!path || !totalLength || startY === endY) return;
+
+      const rawProgress = (anchorDocY - startY) / (endY - startY);
+      const progress = Math.min(1, Math.max(0, rawProgress));
+
+      path.style.strokeDasharray = buildDashArray(totalLength, progress);
+      path.style.markerEnd = progress > 0.97 ? "url(#connector-arrow)" : "none";
+
+      const itemIndex = index + 1;
+      if (progress >= 0.92 && !nextRevealed[itemIndex]) {
+        nextRevealed[itemIndex] = true;
+        revealedChanged = true;
+      } else if (progress < 0.3 && nextRevealed[itemIndex]) {
+        nextRevealed[itemIndex] = false;
+        revealedChanged = true;
+      }
+    });
+
+    if (revealedChanged) {
+      revealedRef.current = nextRevealed;
+      setRevealed(nextRevealed);
+    }
+  });
 
   return (
     <section className="bg-[#0B1220] px-6 py-24">
