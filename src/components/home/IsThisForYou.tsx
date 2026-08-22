@@ -47,10 +47,39 @@ const items = [
   },
 ];
 
+const DOT_DASH = 5;
+const DOT_GAP = 7;
+const DOT_CYCLE = DOT_DASH + DOT_GAP;
+
+function buildDashArray(totalLength: number, progress: number) {
+  const revealedLength = totalLength * progress;
+  if (revealedLength <= 0) return `0 ${totalLength + 1}`;
+
+  const fullCycles = Math.floor(revealedLength / DOT_CYCLE);
+  const remainder = revealedLength - fullCycles * DOT_CYCLE;
+  // Every entry is pushed as a (dash, gap) pair so the list length is always
+  // even — SVG duplicates an odd-length dasharray, which corrupts the
+  // trailing "hide the rest" gap into a visible solid stretch.
+  const parts: number[] = [];
+  for (let i = 0; i < fullCycles; i++) parts.push(DOT_DASH, DOT_GAP);
+  if (remainder <= DOT_DASH) parts.push(remainder, 0);
+  else parts.push(DOT_DASH, remainder - DOT_DASH);
+  parts.push(0, totalLength + 1);
+
+  return parts.join(" ");
+}
+
 export default function IsThisForYou() {
   const containerRef = useRef<HTMLDivElement>(null);
   const dotRefs = useRef<(HTMLSpanElement | null)[]>([]);
+  const pathRefs = useRef<(SVGPathElement | null)[]>([]);
+  const pathLengths = useRef<number[]>([]);
+  const dotDocY = useRef<number[]>([]);
+  const revealedRef = useRef<boolean[]>(items.map((_, i) => i === 0));
   const [segments, setSegments] = useState<string[]>([]);
+  const [revealed, setRevealed] = useState<boolean[]>(
+    items.map((_, i) => i === 0)
+  );
 
   useEffect(() => {
     function computePath() {
@@ -77,7 +106,6 @@ export default function IsThisForYou() {
       for (let i = 1; i < points.length; i++) {
         const prev = points[i - 1];
         const curr = points[i];
-
         nextSegments.push(
           `M ${prev.x} ${prev.y} Q ${curr.x} ${prev.y}, ${curr.x} ${curr.y}`
         );
@@ -89,6 +117,85 @@ export default function IsThisForYou() {
     window.addEventListener("resize", computePath);
     return () => window.removeEventListener("resize", computePath);
   }, []);
+
+  useEffect(() => {
+    // Reference line, as a fraction of viewport height, that each dot's
+    // reveal is measured against. Progress for a segment is how far the
+    // scroll has carried this line from the previous dot to the next one —
+    // so the draw always spans exactly the real distance between the two
+    // items instead of a fixed pixel/viewport window (which finishes too
+    // fast when items are far apart and looks like a jump-cut).
+    const ANCHOR_FRACTION = 0.72;
+
+    function measure() {
+      pathLengths.current = pathRefs.current.map(
+        (path) => path?.getTotalLength() ?? 0
+      );
+      dotDocY.current = dotRefs.current.map((dot) => {
+        if (!dot) return 0;
+        const rect = dot.getBoundingClientRect();
+        return rect.top + rect.height / 2 + window.scrollY;
+      });
+    }
+
+    function updateProgress() {
+      const anchorDocY = window.scrollY + window.innerHeight * ANCHOR_FRACTION;
+      let revealedChanged = false;
+      const nextRevealed = revealedRef.current.slice();
+
+      pathRefs.current.forEach((path, index) => {
+        const totalLength = pathLengths.current[index];
+        const startY = dotDocY.current[index];
+        const endY = dotDocY.current[index + 1];
+        if (!path || !totalLength || startY === endY) return;
+
+        const rawProgress = (anchorDocY - startY) / (endY - startY);
+        const progress = Math.min(1, Math.max(0, rawProgress));
+
+        path.style.strokeDasharray = buildDashArray(totalLength, progress);
+        path.style.markerEnd = progress > 0.97 ? "url(#connector-arrow)" : "none";
+
+        const itemIndex = index + 1;
+        if (progress >= 0.92 && !nextRevealed[itemIndex]) {
+          nextRevealed[itemIndex] = true;
+          revealedChanged = true;
+        } else if (progress < 0.3 && nextRevealed[itemIndex]) {
+          nextRevealed[itemIndex] = false;
+          revealedChanged = true;
+        }
+      });
+
+      if (revealedChanged) {
+        revealedRef.current = nextRevealed;
+        setRevealed(nextRevealed);
+      }
+    }
+
+    measure();
+    updateProgress();
+
+    let ticking = false;
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        updateProgress();
+        ticking = false;
+      });
+    }
+
+    function onResize() {
+      measure();
+      updateProgress();
+    }
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onResize);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onResize);
+    };
+  }, [segments]);
 
   return (
     <section className="bg-[#0B1220] px-6 py-24">
@@ -117,26 +224,34 @@ export default function IsThisForYou() {
             {segments.map((d, index) => (
               <path
                 key={index}
+                ref={(el) => {
+                  pathRefs.current[index] = el;
+                }}
                 d={d}
                 fill="none"
-                stroke="rgba(255,255,255,0.25)"
+                stroke="rgba(255,255,255,0.35)"
                 strokeWidth="2"
-                strokeDasharray="5 7"
                 strokeLinecap="round"
-                markerEnd="url(#connector-arrow)"
+                strokeDasharray="0 100000"
+                markerEnd="none"
               />
             ))}
           </svg>
           {items.map((item, index) => {
             const alignRight = index % 2 === 1;
+            const isRevealed = index === 0 || revealed[index];
             return (
               <div
                 key={item.number}
                 style={{ gridRow: index + 1 }}
-                className={`relative ${
+                className={`relative transition-all duration-700 ease-out ${
                   alignRight
                     ? "sm:col-start-3 sm:pl-10 sm:text-right"
                     : "sm:col-start-1 sm:pr-10 sm:text-left"
+                } ${
+                  isRevealed
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-6"
                 }`}
               >
                 <div
