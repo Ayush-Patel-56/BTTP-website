@@ -1,39 +1,34 @@
+import Image from "next/image";
+
 const banks = [
-  { name: "American Express", color: "#006FCF" },
-  { name: "SBI Card", color: "#22409A" },
-  { name: "ICICI Bank", color: "#E96125" },
-  { name: "YES Bank", color: "#0056A8" },
-  { name: "IDFC FIRST Bank", color: "#8B1E3F" },
-  { name: "IndusInd Bank", color: "#B5121B" },
-  { name: "HDFC Bank", color: "#1A3E8C" },
-  { name: "Axis Bank", color: "#91004B" },
+  { name: "American Express", logo: "/logos/american-express.svg" },
+  { name: "SBI Card", logo: "/logos/sbi-card.svg" },
+  { name: "ICICI Bank", logo: "/logos/icici-bank.svg" },
+  { name: "YES Bank", logo: "/logos/yes-bank.svg" },
+  { name: "IDFC FIRST Bank", logo: "/logos/idfc-first-bank.svg" },
+  { name: "IndusInd Bank", logo: "/logos/indusind-bank.svg" },
+  { name: "HDFC Bank", logo: "/logos/hdfc-bank.svg" },
+  { name: "Axis Bank", logo: "/logos/axis-bank.svg" },
 ];
 
 const loyaltyPrograms = [
-  { name: "Air India Maharaja", color: "#C99700" },
-  { name: "British Airways Executive Club", color: "#0B3D91" },
-  { name: "Marriott Bonvoy", color: "#7A0C2E" },
-  { name: "Hilton Honors", color: "#0B5FA5" },
-  { name: "Emirates Skywards", color: "#C8102E" },
-  { name: "Singapore Airlines KrisFlyer", color: "#B8860B" },
-  { name: "IHG One Rewards", color: "#5C2D91" },
-  { name: "Qatar Airways Privilege Club", color: "#6E0D25" },
-  { name: "ALL – Accor Live Limitless", color: "#3A0CA3" },
-  { name: "United MileagePlus", color: "#04225A" },
+  { name: "Air India Maharaja", logo: "/logos/air-india.svg" },
+  { name: "British Airways Executive Club", logo: "/logos/british-airways.svg" },
+  { name: "Marriott Bonvoy", logo: "/logos/marriott-bonvoy.svg" },
+  { name: "Hilton Honors", logo: "/logos/hilton-honors.svg" },
+  { name: "Emirates Skywards", logo: "/logos/emirates.svg" },
+  { name: "Singapore Airlines KrisFlyer", logo: "/logos/singapore-airlines.svg" },
+  { name: "IHG One Rewards", logo: "/logos/ihg.svg" },
+  { name: "Qatar Airways Privilege Club", logo: "/logos/qatar-airways.svg" },
+  { name: "ALL – Accor Live Limitless", logo: "/logos/accor.svg" },
+  { name: "United MileagePlus", logo: "/logos/united-mileageplus.svg" },
 ];
 
-function Pill({ name, color }: { name: string; color: string }) {
+function LogoCard({ name, logo }: { name: string; logo: string }) {
   return (
-    <span
-      className="flex shrink-0 items-center rounded-full border px-5 py-2.5 text-sm font-semibold whitespace-nowrap"
-      style={{
-        backgroundColor: `${color}14`,
-        borderColor: `${color}33`,
-        color,
-      }}
-    >
-      {name}
-    </span>
+    <div className="relative flex h-20 w-40 shrink-0 items-center justify-center rounded-xl border border-black/10 bg-white px-6 py-4 shadow-sm shadow-black/5">
+      <Image src={logo} alt={name} fill className="object-contain p-4" sizes="160px" />
+    </div>
   );
 }
 
@@ -42,7 +37,7 @@ function MarqueeRow({
   direction,
   duration,
 }: {
-  items: { name: string; color: string }[];
+  items: { name: string; logo: string }[];
   direction: "left" | "right";
   duration: number;
 }) {
@@ -57,7 +52,7 @@ function MarqueeRow({
         style={{ animationDuration: `${duration}s` }}
       >
         {track.map((item, index) => (
-          <Pill key={`${item.name}-${index}`} name={item.name} color={item.color} />
+          <LogoCard key={`${item.name}-${index}`} name={item.name} logo={item.logo} />
         ))}
       </div>
     </div>
