@@ -14,6 +14,7 @@
   --font-mono: var(--font-geist-mono);
   --animate-marquee-left: marquee-left 40s linear infinite;
   --animate-marquee-right: marquee-right 40s linear infinite;
+  --animate-ticket-in: ticket-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 @keyframes marquee-left {
@@ -34,10 +35,25 @@
   }
 }
 
+@keyframes ticket-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-marquee-left,
   .animate-marquee-right {
     animation-play-state: paused;
+  }
+
+  .animate-ticket-in {
+    animation: none;
   }
 }
 
