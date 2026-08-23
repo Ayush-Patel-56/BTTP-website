@@ -15,6 +15,8 @@
   --animate-marquee-left: marquee-left 40s linear infinite;
   --animate-marquee-right: marquee-right 40s linear infinite;
   --animate-ticket-in: ticket-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  --animate-bubble-in: bubble-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+  --animate-typing-bounce: typing-bounce 1.2s ease-in-out infinite;
 }
 
 @keyframes marquee-left {
@@ -46,14 +48,43 @@
   }
 }
 
+@keyframes bubble-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes typing-bounce {
+  0%,
+  60%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+  30% {
+    transform: translateY(-4px);
+    opacity: 1;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-marquee-left,
   .animate-marquee-right {
     animation-play-state: paused;
   }
 
-  .animate-ticket-in {
+  .animate-ticket-in,
+  .animate-bubble-in {
     animation: none;
+  }
+
+  .animate-typing-bounce {
+    animation-duration: 0.01ms;
   }
 }
 
