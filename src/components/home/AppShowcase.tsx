@@ -2,19 +2,19 @@ import Image from "next/image";
 
 const features = [
   {
-    title: "One dashboard for every point",
+    title: "Everything in one place",
     description:
-      "See the total value sitting across your cards, airlines, and hotels the moment you open the app.",
+      "Open the app and see what every card, airline, and hotel program adds up to, without doing the math yourself.",
   },
   {
-    title: "Alerts before points expire",
+    title: "A heads-up before they expire",
     description:
-      "Get nudged with enough runway to redeem or transfer points before they quietly lapse.",
+      "We'll give you enough notice to redeem or move your points before they quietly run out.",
   },
   {
-    title: "Card picks that fit your spend",
+    title: "Card picks based on how you actually spend",
     description:
-      "Answer three quick questions and we'll tell you which card actually earns you more.",
+      "Answer a couple of quick questions and we'll point you to the card that earns you more on the spending you're already doing.",
   },
 ];
 
@@ -27,12 +27,13 @@ export default function AppShowcase() {
             The BTTP App
           </p>
           <h2 className="mt-3 text-4xl font-bold text-black sm:text-5xl">
-            Every point, tracked. Every rupee, accounted for.
+            All your points, finally adding up in one place.
           </h2>
           <p className="mt-5 max-w-md text-black/60">
-            No more guessing what your rewards are worth or digging through five
-            different apps to redeem them. BTTP watches every card, program, and
-            expiry date for you.
+            You don&apos;t need to guess what your rewards are worth or jump
+            between five different apps just to redeem them. BTTP keeps an eye
+            on every card, every program, and every expiry date so you
+            don&apos;t have to.
           </p>
 
           <ul className="mt-10 space-y-6">
@@ -87,8 +88,8 @@ export default function AppShowcase() {
               </span>
             </div>
             <p className="mt-3 text-xs text-black/40">
-              BTTP is currently in private beta — the app isn&apos;t publicly
-              downloadable yet.
+              We&apos;re still in private beta, so the app isn&apos;t
+              available to download just yet.
             </p>
           </div>
         </div>
