@@ -6,45 +6,45 @@ import { useMotionValue, useMotionValueEvent, useSpring } from "framer-motion";
 const items = [
   {
     number: "01",
-    titleTop: "Clueless",
-    titleBottom: "About Points",
+    titleTop: "No Idea",
+    titleBottom: "What It's Worth",
     description:
-      "You earn points daily but don't know what they're worth or how to use them smartly.",
+      "You've got points sitting on every card statement and honestly, you've never worked out what any of it is actually worth.",
   },
   {
     number: "02",
-    titleTop: "Transfers",
-    titleBottom: "Are Confusing",
+    titleTop: "Scared Of",
+    titleBottom: "Transfers",
     description:
-      "Airline? Hotel? Which partner? Transfers feel risky and complicated, so you avoid them.",
+      "Move points to the wrong airline partner, or time it badly, and they're gone for good. So most people just leave them sitting there.",
   },
   {
     number: "03",
-    titleTop: "Scattered",
-    titleBottom: "Points",
+    titleTop: "Points, Scattered",
+    titleBottom: "Everywhere",
     description:
-      "Your points are scattered, expiry dates looming, and rules always changing. It's a mess.",
+      "A bit on this card, a bit on that program, each with its own expiry date nobody's tracking.",
   },
   {
     number: "04",
-    titleTop: "What's a Trip",
-    titleBottom: "Really Worth?",
+    titleTop: "Can't Tell",
+    titleBottom: "What A Trip Costs",
     description:
-      "You search for hours but still can't figure out how many points a trip will actually cost.",
+      "An hour of searching later and you still don't know if that flight is 30,000 points or 90,000.",
   },
   {
     number: "05",
-    titleTop: "Cashback",
-    titleBottom: "Isn't Exciting",
+    titleTop: "₹500 Cashback?",
+    titleBottom: "No Thanks",
     description:
-      "You'd rather travel than settle for ₹500 cashback, but don't know how to start.",
+      "Given the choice, you'd rather fly business than settle for a small cashback credit. You just don't know the path to get there.",
   },
   {
     number: "06",
-    titleTop: "Business Class?",
-    titleBottom: "How?!",
+    titleTop: "Flying Business",
+    titleBottom: "On Points, How?",
     description:
-      "You've heard the stories, but have no idea how people actually fly in style on points.",
+      "You've watched other people do it and figured it takes connections or luck. It really just takes knowing the system.",
   },
 ];
 
