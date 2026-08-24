@@ -11,27 +11,27 @@ import {
 const features = [
   {
     title: "Rewards Dashboard",
-    description: "Every point across your cards, airlines, and hotels — in one view.",
+    description: "See every point sitting across your cards, airlines, and hotel accounts, all on one screen.",
   },
   {
     title: "Missed Value Alerts",
-    description: "Catch the rewards you're leaving on the table before they expire.",
+    description: "Get flagged the moment a reward is about to expire unused.",
   },
   {
     title: "Card Recommendations",
-    description: "Know exactly which card to swipe, every time you spend.",
+    description: "Know which card to swipe for every purchase, based on what actually earns the most.",
   },
   {
     title: "Point Transfers",
-    description: "Move points between programs without doing the math yourself.",
+    description: "Move points between programs and let the app work out the conversion math.",
   },
   {
     title: "Trip Planner",
-    description: "Turn a points balance into a real itinerary, not just a number.",
+    description: "Turn a points balance sitting in an account into an actual trip you can book.",
   },
   {
     title: "Quick Pay",
-    description: "Settle credit card and rent bills without leaving the app.",
+    description: "Pay off credit card bills and rent right from inside the app.",
   },
 ];
 
@@ -146,11 +146,11 @@ function DesktopGallery({ containerRef }: { containerRef: React.RefObject<HTMLDi
           What We Do
         </p>
         <h2 className="mt-3 text-4xl font-bold text-white sm:text-5xl">
-          Everything your rewards need, in one app.
+          Everything you need to actually use your rewards.
         </h2>
         <p className="mx-auto mt-5 max-w-xl text-white/60">
-          From tracking every point to catching the ones you&apos;re about to
-          lose — here&apos;s what&apos;s inside.
+          Here&apos;s a quick look at everything the app does, from tracking
+          every point to catching the ones you&apos;re about to lose.
         </p>
         <div className="mx-auto mt-8 h-1 w-40 overflow-hidden rounded-full bg-white/10">
           <div ref={progressRef} className="h-full rounded-full bg-[#FF9F1C]" />
@@ -188,11 +188,11 @@ export default function AiSection() {
           What We Do
         </p>
         <h2 className="mt-3 text-4xl font-bold text-white">
-          Everything your rewards need, in one app.
+          Everything you need to actually use your rewards.
         </h2>
         <p className="mx-auto mt-5 max-w-xl text-white/60">
-          From tracking every point to catching the ones you&apos;re about to
-          lose — here&apos;s what&apos;s inside.
+          Here&apos;s a quick look at everything the app does, from tracking
+          every point to catching the ones you&apos;re about to lose.
         </p>
       </div>
 
