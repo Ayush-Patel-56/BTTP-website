@@ -5,6 +5,7 @@ import { motion, useMotionValueEvent, useScroll, useTransform } from "framer-mot
 
 export default function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const stickyRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -16,6 +17,7 @@ export default function Hero() {
   const overlayOpacity = useTransform(scrollYProgress, [0, 1], [0, 0.6]);
   const textScale = useTransform(scrollYProgress, [0, 0.7], [1, 1.45]);
   const textOpacity = useTransform(scrollYProgress, [0.35, 0.75], [1, 0]);
+  const stickyOpacity = useTransform(scrollYProgress, [0.85, 1], [1, 0]);
 
   // Framer Motion doesn't reliably flush a decreasing-output style() binding
   // to the DOM once the source value settles at its clamped end (verified
@@ -25,10 +27,19 @@ export default function Hero() {
   useMotionValueEvent(textOpacity, "change", (v) => {
     if (textRef.current) textRef.current.style.opacity = String(v);
   });
+  // Without this, the blurred video's last residual pixels linger across
+  // the top of the viewport for a few scroll-pixels after the sticky pin
+  // releases, overlapping the next section beneath it.
+  useMotionValueEvent(stickyOpacity, "change", (v) => {
+    if (stickyRef.current) stickyRef.current.style.opacity = String(v);
+  });
 
   return (
-    <section ref={containerRef} className="relative h-[200vh]">
-      <div className="sticky top-0 flex h-screen flex-col items-center justify-center overflow-hidden border-b border-black/10 px-6 text-center">
+    <section ref={containerRef} className="relative h-[200vh] bg-[#0B1220]">
+      <div
+        ref={stickyRef}
+        className="sticky top-0 flex h-screen flex-col items-center justify-center overflow-hidden border-b border-black/10 px-6 text-center"
+      >
         <motion.video
           className="absolute inset-0 h-full w-full object-cover"
           style={{ scale: videoScale, filter: videoBlur }}
