@@ -9,44 +9,69 @@ interface FaqItem {
 
 const faqs: FaqItem[] = [
   {
-    question: "How do I redeem my points?",
+    question: "Is Back to the Points free?",
     answer:
-      "Link your bank and loyalty accounts once, then browse live redemption options inside BTTP — we handle the transfer and booking steps end-to-end.",
+      "Yes. Back to the Points is free to use during the beta, with no subscription or joining fee.",
   },
   {
-    question: "Which banks and cards do you support?",
+    question: "Which credit cards do you support?",
     answer:
-      "American Express, HDFC, ICICI, Axis, SBI Card, IDFC FIRST, IndusInd, and YES Bank, with new issuers added regularly.",
+      "American Express, HDFC, ICICI, Axis, SBI Card, IDFC FIRST, IndusInd, and YES Bank, with more issuers being added regularly.",
   },
   {
-    question: "Is there a joining or subscription fee?",
+    question: "Which airline and hotel programs are supported?",
     answer:
-      "No. BTTP is free to join — we only earn a small fee when you complete a redemption through the platform.",
+      "Air India Maharaja, Emirates Skywards, Singapore Airlines KrisFlyer, British Airways Executive Club, Qatar Airways Privilege Club, Marriott Bonvoy, Hilton Honors, IHG One Rewards, and Accor Live Limitless, among others.",
   },
   {
-    question: "How does BTTP actually work?",
+    question: "How do you calculate what my points are worth?",
     answer:
-      "We connect to your existing cards and loyalty programs, track your real balance across all of them, and surface the best way to spend those points for flights, hotels, and upgrades.",
+      "We look at real redemption options across your programs, cash-equivalent rates, and current transfer values, then convert your balance into an estimated rupee value.",
   },
   {
-    question: "Is my card and account data safe?",
+    question: "Are the valuations guaranteed?",
     answer:
-      "Yes — we use bank-grade encryption and never store your card credentials. Connections are read-only wherever your bank supports it.",
+      "No. Valuations are estimates based on current redemption rates, which change often. Treat them as a guide, not a locked-in price.",
   },
   {
-    question: "Can I track multiple loyalty programs at once?",
+    question: "Do you access my bank account?",
     answer:
-      "Absolutely. Most members track three to six programs side by side and let BTTP recommend the best one to redeem from for a given trip.",
+      "No. We don't connect to or read your bank account. Back to the Points only tracks the reward points and miles you choose to add.",
   },
   {
-    question: "What if I need help from a real person?",
+    question: "Do you store card details?",
     answer:
-      "Our support team is available in-app for anything the assistant can't resolve — most queries get a human reply within a few hours.",
+      "No. We never ask for or store your full card number or expiry date.",
   },
   {
-    question: "Do you support international airlines and hotels?",
+    question: "Will you ever ask for my CVV, PIN or banking password?",
     answer:
-      "Yes, including Emirates, Singapore Airlines, British Airways, Qatar Airways, Marriott Bonvoy, Hilton Honors, IHG, and Accor.",
+      "Never. No one from Back to the Points will ever ask for your CVV, PIN, or any banking password, in the app or otherwise.",
+  },
+  {
+    question: "Can I manually change the value of my points?",
+    answer:
+      "Not yet. Valuations are currently set by our estimates, though letting you adjust them yourself is on our roadmap.",
+  },
+  {
+    question: "Can Back to the Points tell me which card to use?",
+    answer:
+      "Yes. Based on where you're spending, we'll point you to the card in your wallet that earns the most for that purchase.",
+  },
+  {
+    question: "Can it tell me where to transfer my points?",
+    answer:
+      "Yes. We show which transfer partners give you the best value for a specific redemption, so you're not guessing.",
+  },
+  {
+    question: "Can I use Back to the Points to book travel?",
+    answer:
+      "Not directly yet. We're still in private beta, so today we help you decide the best way to redeem, then point you to where to complete the booking.",
+  },
+  {
+    question: "Is my data safe?",
+    answer:
+      "Yes. We use bank-grade encryption, and connections are read-only wherever a program supports it.",
   },
 ];
 

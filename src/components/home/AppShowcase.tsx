@@ -50,13 +50,11 @@ export default function AppShowcase() {
               The BTTP App
             </p>
             <h2 className="mt-3 text-4xl font-bold text-black sm:text-5xl">
-              All your points, finally adding up in one place.
+              100,000 Points Doesn&apos;t Mean Much. ₹82,500 Does.
             </h2>
             <p className="mt-5 max-w-md text-black/60">
-              You don&apos;t need to guess what your rewards are worth or
-              jump between five different apps just to redeem them. BTTP
-              keeps an eye on every card, every program, and every expiry
-              date so you don&apos;t have to.
+              Back to the Points helps estimate the value of your rewards so
+              you can make smarter decisions about when and how to use them.
             </p>
           </motion.div>
 

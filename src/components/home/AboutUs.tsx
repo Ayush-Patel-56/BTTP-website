@@ -63,14 +63,14 @@ export default function AboutUs() {
     <section id="about-us" className="bg-[#0a0e17] px-6 py-24">
       <div className="mx-auto grid max-w-6xl gap-16 md:grid-cols-2 md:items-center">
         <div>
-          <p className="text-sm font-semibold tracking-wide text-[#FF9F1C] uppercase">About BTTP</p>
+          <p className="text-sm font-semibold tracking-wide text-[#FF9F1C] uppercase">About Back to the Points</p>
           <h2 className="mt-4 text-3xl font-bold text-white sm:text-4xl md:text-[2.75rem] md:leading-tight">
-            You&apos;ve already earned these points. We just make them usable.
+            Points Have A Point. They&apos;re Meant To Take You Places.
           </h2>
           <p className="mt-6 max-w-md text-white/50">
-            BTTP was built after watching one too many miles expire unused. We connect your
-            cards and loyalty programs, tell you what they&apos;re actually worth, and get you
-            to redemption before the points quietly disappear.
+            Back to the Points was built after watching one too many miles expire unused. We
+            connect your cards and loyalty programs, tell you what they&apos;re actually
+            worth, and get you to redemption before the points quietly disappear.
           </p>
         </div>
 

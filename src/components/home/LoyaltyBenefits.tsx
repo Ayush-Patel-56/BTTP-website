@@ -151,10 +151,15 @@ export default function LoyaltyBenefits() {
             Real Redemptions
           </p>
           <h2 className="mt-3 text-3xl font-bold text-white sm:text-4xl">
-            Loyalty Programs to Benefits
+            Same Points. Better Trip.
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-white/50">
-            How each loyalty program maps to real, redeemable benefits.
+            Not every redemption gives you the same value. Back to the
+            Points helps you compare your options before you move a single
+            point.
+          </p>
+          <p className="mt-2 text-sm font-semibold text-[#FF9F1C]">
+            Stop wasting good points on bad redemptions.
           </p>
         </div>
 

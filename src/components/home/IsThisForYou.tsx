@@ -6,43 +6,36 @@ import { useMotionValue, useMotionValueEvent, useSpring } from "framer-motion";
 const items = [
   {
     number: "01",
-    titleTop: "No Idea",
-    titleBottom: "What It's Worth",
+    titleTop: "You Don't Know",
+    titleBottom: "What Your Points Are Worth",
     description:
       "You've got points sitting on every card statement and honestly, you've never worked out what any of it is actually worth.",
   },
   {
     number: "02",
-    titleTop: "Scared Of",
-    titleBottom: "Transfers",
-    description:
-      "Move points to the wrong airline partner, or time it badly, and they're gone for good. So most people just leave them sitting there.",
-  },
-  {
-    number: "03",
-    titleTop: "Points, Scattered",
-    titleBottom: "Everywhere",
+    titleTop: "Your Points Are",
+    titleBottom: "Scattered Everywhere",
     description:
       "A bit on this card, a bit on that program, each with its own expiry date nobody's tracking.",
   },
   {
-    number: "04",
-    titleTop: "Can't Tell",
-    titleBottom: "What A Trip Costs",
+    number: "03",
+    titleTop: "No Single Dashboard",
+    titleBottom: "For All Your Points",
     description:
-      "An hour of searching later and you still don't know if that flight is 30,000 points or 90,000.",
+      "Your cards, airlines and hotels all live in separate apps with separate logins. There's nowhere to see everything you've earned in one place.",
+  },
+  {
+    number: "04",
+    titleTop: "You Don't Know",
+    titleBottom: "How To Redeem Them",
+    description:
+      "Move points to the wrong partner, or time it badly, and they're gone for good. You want a way to know you're making the right call.",
   },
   {
     number: "05",
-    titleTop: "₹500 Cashback?",
-    titleBottom: "No Thanks",
-    description:
-      "Given the choice, you'd rather fly business than settle for a small cashback credit. You just don't know the path to get there.",
-  },
-  {
-    number: "06",
-    titleTop: "Flying Business",
-    titleBottom: "On Points, How?",
+    titleTop: "You Don't Know How To",
+    titleBottom: "Fly Business On Points",
     description:
       "You've watched other people do it and figured it takes connections or luck. It really just takes knowing the system.",
   },
@@ -205,7 +198,20 @@ export default function IsThisForYou() {
   return (
     <section className="bg-[#0B1220] px-6 py-24">
       <div className="mx-auto max-w-5xl">
-        <p className="mb-16 text-center text-sm font-semibold tracking-wide text-white/50 uppercase">
+        <div className="mx-auto max-w-2xl text-center">
+          <h2 className="text-xl font-bold text-white sm:text-2xl">
+            You Wouldn&apos;t Ignore{" "}
+            <span className="text-[#FF9F1C]">₹50,000</span> In Your Bank
+            Account. So Why Ignore It In Points?
+          </h2>
+          <p className="mt-5 text-white/60">
+            Reward points are value you&apos;ve already earned. The problem?
+            They&apos;re scattered across multiple cards, airlines and
+            hotels, each with different rules, values and expiry dates. We
+            make sense of them for you.
+          </p>
+        </div>
+        <p className="mt-16 mb-16 text-center text-sm font-semibold tracking-wide text-white/50 uppercase">
           Is this for you?
         </p>
         <div

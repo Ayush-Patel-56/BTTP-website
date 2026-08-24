@@ -146,11 +146,12 @@ function DesktopGallery({ containerRef }: { containerRef: React.RefObject<HTMLDi
           What We Do
         </p>
         <h2 className="mt-3 text-4xl font-bold text-white sm:text-5xl">
-          Everything you need to actually use your rewards.
+          Your Personal Points Nerd. So You Don&apos;t Have To Become One.
         </h2>
         <p className="mx-auto mt-5 max-w-xl text-white/60">
-          Here&apos;s a quick look at everything the app does, from tracking
-          every point to catching the ones you&apos;re about to lose.
+          Your points are worth more than you think. Bring your credit card
+          rewards, airline miles and hotel points together and discover what
+          they can actually get you.
         </p>
         <div className="mx-auto mt-8 h-1 w-40 overflow-hidden rounded-full bg-white/10">
           <div ref={progressRef} className="h-full rounded-full bg-[#FF9F1C]" />
