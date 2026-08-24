@@ -1,4 +1,21 @@
+"use client";
+
 import Image from "next/image";
+import { motion } from "framer-motion";
+
+const containerVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.12 } },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: "easeOut" as const },
+  },
+};
 
 const features = [
   {
@@ -22,23 +39,37 @@ export default function AppShowcase() {
   return (
     <section id="try-now" className="bg-white px-6 py-24">
       <div className="mx-auto grid max-w-5xl grid-cols-1 items-center gap-16 lg:grid-cols-2">
-        <div>
-          <p className="text-sm font-semibold tracking-wide text-[#FF9F1C] uppercase">
-            The BTTP App
-          </p>
-          <h2 className="mt-3 text-4xl font-bold text-black sm:text-5xl">
-            All your points, finally adding up in one place.
-          </h2>
-          <p className="mt-5 max-w-md text-black/60">
-            You don&apos;t need to guess what your rewards are worth or jump
-            between five different apps just to redeem them. BTTP keeps an eye
-            on every card, every program, and every expiry date so you
-            don&apos;t have to.
-          </p>
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+        >
+          <motion.div variants={itemVariants}>
+            <p className="text-sm font-semibold tracking-wide text-[#FF9F1C] uppercase">
+              The BTTP App
+            </p>
+            <h2 className="mt-3 text-4xl font-bold text-black sm:text-5xl">
+              All your points, finally adding up in one place.
+            </h2>
+            <p className="mt-5 max-w-md text-black/60">
+              You don&apos;t need to guess what your rewards are worth or
+              jump between five different apps just to redeem them. BTTP
+              keeps an eye on every card, every program, and every expiry
+              date so you don&apos;t have to.
+            </p>
+          </motion.div>
 
-          <ul className="mt-10 space-y-6">
+          <motion.ul
+            variants={containerVariants}
+            className="mt-10 space-y-6"
+          >
             {features.map((feature) => (
-              <li key={feature.title} className="flex gap-4">
+              <motion.li
+                key={feature.title}
+                variants={itemVariants}
+                className="flex gap-4"
+              >
                 <span className="mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full bg-[#FF9F1C]" />
                 <div>
                   <p className="font-semibold text-black">{feature.title}</p>
@@ -46,11 +77,11 @@ export default function AppShowcase() {
                     {feature.description}
                   </p>
                 </div>
-              </li>
+              </motion.li>
             ))}
-          </ul>
+          </motion.ul>
 
-          <div className="mt-10">
+          <motion.div variants={itemVariants} className="mt-10">
             <div className="flex flex-wrap gap-3">
               <span className="flex items-center gap-2 rounded-xl border border-black/10 bg-black/5 px-4 py-2.5 text-black/40">
                 <svg
@@ -91,10 +122,16 @@ export default function AppShowcase() {
               We&apos;re still in private beta, so the app isn&apos;t
               available to download just yet.
             </p>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
-        <div className="flex justify-center">
+        <motion.div
+          className="flex justify-center"
+          initial={{ opacity: 0, x: 40 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
           <div className="rounded-[2.75rem] border-[10px] border-neutral-900 bg-neutral-900 p-1.5 shadow-2xl shadow-black/20">
             <div className="relative h-3 w-full">
               <span className="absolute top-0 left-1/2 h-3 w-24 -translate-x-1/2 rounded-b-xl bg-neutral-900" />
@@ -109,7 +146,7 @@ export default function AppShowcase() {
               />
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
