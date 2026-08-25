@@ -55,15 +55,19 @@ export default function Hero() {
         />
         <motion.div
           ref={textRef}
-          className="relative mx-auto max-w-4xl"
+          className="relative mx-auto flex max-w-5xl flex-col items-center"
           style={{ scale: textScale }}
         >
-          <h1 className="hero-reveal text-5xl font-semibold text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.45)] sm:text-6xl md:text-7xl">
-            You Earned The Points. Now Make Them Count.
+          <h1 className="hero-reveal text-balance text-5xl leading-tight font-bold tracking-tight text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.45)] sm:text-6xl md:text-7xl">
+            You Wouldn&apos;t Ignore ₹50,000 In Your Bank Account
+            <br className="hidden sm:block" /> Why Ignore It In Points?
           </h1>
-          <p className="hero-reveal hero-reveal-delay-1 mt-4 text-xl text-white/85 drop-shadow-[0_1px_6px_rgba(0,0,0,0.4)] sm:text-2xl">
+          <p className="hero-reveal hero-reveal-delay-1 mt-8 text-2xl font-medium text-white/80 drop-shadow-[0_1px_6px_rgba(0,0,0,0.4)] sm:text-3xl">
+            You Earned The Points Now Make Them Count
+          </p>
+          <p className="hero-reveal hero-reveal-delay-1 mt-5 max-w-2xl text-lg leading-relaxed text-white/60 drop-shadow-[0_1px_6px_rgba(0,0,0,0.4)] sm:text-xl">
             Back to the Points turns scattered credit card rewards, miles and
-            hotel points into real value and experiences.
+            hotel points into real value and experiences
           </p>
         </motion.div>
       </div>
