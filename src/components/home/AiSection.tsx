@@ -61,13 +61,13 @@ const features: Feature[] = [
   },
   {
     title: "Missed Value Alerts",
-    description: "Get flagged the moment a reward is about to expire unused.",
+    description: "Cards that need attention get flagged automatically, so you can pay, redeem or check offers before value slips away.",
+    image: "/wallet.png",
     callouts: [
-      { text: "Which of my cards has points about to expire?", top: "6%", side: "left", color: "blue" },
-      { text: "18,400 points expiring in 8 days", top: "27%", side: "right", color: "dark" },
-      { text: "Get flagged before a reward disappears", top: "50%", side: "left", color: "purple" },
-      { text: "Auto-reminders, not manual checking", top: "70%", side: "right", color: "cyan" },
-      { text: "Never lose a point to silent expiry again", top: "89%", side: "left", color: "dark" },
+      { text: "12.4K points at risk right now", top: "22%", side: "left", color: "blue" },
+      { text: "Needs attention, flagged automatically", top: "48%", side: "right", color: "dark" },
+      { text: "HDFC Infinia: ₹82,400 in points", top: "72%", side: "left", color: "purple" },
+      { text: "Pay, check offers, or redeem — per card", top: "85%", side: "right", color: "cyan" },
     ],
   },
   {
