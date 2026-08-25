@@ -50,6 +50,17 @@ const features: Feature[] = [
     ],
   },
   {
+    title: "Card Recommendations",
+    description: "Know which card to swipe for every purchase, based on what actually earns the most.",
+    image: "/recommendation.png",
+    callouts: [
+      { text: "₹1,66,000 potential yearly returns (3.7%)", top: "14%", side: "left", color: "blue" },
+      { text: "3 of 5 cards are realistic for your profile", top: "38%", side: "right", color: "purple" },
+      { text: "Tata Neu Infinity: 4x groceries & dining", top: "62%", side: "left", color: "dark" },
+      { text: "Matched from 12 months of real spending", top: "82%", side: "right", color: "cyan" },
+    ],
+  },
+  {
     title: "Missed Value Alerts",
     description: "Get flagged the moment a reward is about to expire unused.",
     callouts: [
@@ -57,16 +68,6 @@ const features: Feature[] = [
       { text: "Get flagged before a reward disappears", top: "38%", side: "right", color: "purple" },
       { text: "18,400 points expiring in 8 days — act now", top: "62%", side: "left", color: "dark" },
       { text: "Never lose a point to silent expiry again", top: "82%", side: "right", color: "cyan" },
-    ],
-  },
-  {
-    title: "Card Recommendations",
-    description: "Know which card to swipe for every purchase, based on what actually earns the most.",
-    callouts: [
-      { text: "Which card earns the most at Zara?", top: "14%", side: "left", color: "purple" },
-      { text: "Best card for dining near me?", top: "38%", side: "right", color: "blue" },
-      { text: "Know your top card before you tap", top: "62%", side: "left", color: "cyan" },
-      { text: "Every purchase, matched to the right card", top: "82%", side: "right", color: "dark" },
     ],
   },
   {
