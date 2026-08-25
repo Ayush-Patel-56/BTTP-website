@@ -19,8 +19,26 @@ export async function joinWaitlist(
     return { status: "error", message: "Enter a valid email address." };
   }
 
-  // TODO: wire up to a real destination (email, sheet, DB) once decided.
-  console.log("Waitlist signup:", { firstName, email });
+  const webhookUrl = process.env.WAITLIST_SHEET_WEBHOOK_URL;
+  if (!webhookUrl) {
+    console.log("Waitlist signup (no webhook configured):", { firstName, email });
+    return { status: "success", message: "You're on the list — we'll be in touch." };
+  }
+
+  try {
+    const response = await fetch(webhookUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ firstName, email }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Webhook responded with ${response.status}`);
+    }
+  } catch (error) {
+    console.error("Failed to record waitlist signup:", error);
+    return { status: "error", message: "Something went wrong. Please try again." };
+  }
 
   return { status: "success", message: "You're on the list — we'll be in touch." };
 }
