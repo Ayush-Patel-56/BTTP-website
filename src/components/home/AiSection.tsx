@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "framer-motion";
 
 type CalloutColor = "blue" | "purple" | "cyan" | "dark";
 
@@ -233,18 +233,36 @@ function FeatureTabs({
 
 export default function AiSection() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [mobileIndex, setMobileIndex] = useState(0);
+  const trackRef = useRef<HTMLDivElement>(null);
   const active = features[activeIndex];
+  const mobileActive = features[mobileIndex];
+
+  const { scrollYProgress } = useScroll({
+    target: trackRef,
+    offset: ["start start", "end end"],
+  });
+
+  useMotionValueEvent(scrollYProgress, "change", (value) => {
+    const index = Math.min(features.length - 1, Math.max(0, Math.floor(value * features.length)));
+    setActiveIndex((prev) => (prev === index ? prev : index));
+  });
+
+  const goToIndex = (index: number) => {
+    const el = trackRef.current;
+    if (!el) return;
+    const trackTop = el.getBoundingClientRect().top + window.scrollY;
+    const trackHeight = el.offsetHeight - window.innerHeight;
+    const targetProgress = (index + 0.5) / features.length;
+    window.scrollTo({ top: trackTop + targetProgress * trackHeight, behavior: "smooth" });
+  };
 
   return (
-    <section id="what-we-do" className="relative overflow-hidden bg-[#0B1220] px-6 py-24">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute top-1/3 left-1/2 h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#FF9F1C]/10 blur-[140px]"
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute right-0 bottom-0 h-[420px] w-[420px] translate-x-1/3 translate-y-1/3 rounded-full bg-blue-500/10 blur-[140px]"
-      />
+    <section id="what-we-do" className="relative bg-[#0B1220] px-6 py-24">
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-[700px] overflow-hidden">
+        <div className="absolute top-1/3 left-1/2 h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#FF9F1C]/10 blur-[140px]" />
+        <div className="absolute right-0 bottom-0 h-[420px] w-[420px] translate-x-1/3 translate-y-1/3 rounded-full bg-blue-500/10 blur-[140px]" />
+      </div>
 
       <div className="relative z-10 mx-auto max-w-2xl text-center">
         <p className="text-sm font-semibold tracking-wide text-[#FF9F1C] uppercase">
@@ -260,67 +278,79 @@ export default function AiSection() {
         </p>
       </div>
 
-      <div className="relative z-10 mt-10">
-        <FeatureTabs activeIndex={activeIndex} onSelect={setActiveIndex} />
-      </div>
+      {/* Desktop: scroll-driven pinned showcase — scrolling through the
+          track steps through each feature instead of just fading on click */}
+      <div ref={trackRef} className="relative z-10 hidden lg:block" style={{ height: `${features.length * 100}vh` }}>
+        <div className="sticky top-0 flex h-screen flex-col items-center justify-center">
+          <FeatureTabs activeIndex={activeIndex} onSelect={goToIndex} />
 
-      {/* Desktop: phone with floating callout bubbles */}
-      <div className="relative z-10 mt-16 hidden justify-center lg:flex">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={active.title}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="relative w-[280px]"
-          >
-            <PhoneFrame image={active.image} title={active.title} className="w-full" />
-            <svg
-              aria-hidden
-              className="pointer-events-none absolute inset-0 h-full w-full overflow-visible"
-              viewBox={`0 0 ${PHONE_W} ${PHONE_H}`}
-            >
-              {active.callouts.map((callout, index) => (
-                <CalloutConnector key={callout.text} callout={callout} index={index} />
-              ))}
-            </svg>
-            {active.callouts.map((callout, index) => (
-              <CalloutBubble key={callout.text} callout={callout} index={index} />
-            ))}
-          </motion.div>
-        </AnimatePresence>
-      </div>
-
-      {/* Mobile / tablet: phone with callout chips stacked below */}
-      <div className="relative z-10 mt-12 flex flex-col items-center lg:hidden">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={active.title}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.25 }}
-            className="flex flex-col items-center"
-          >
-            <PhoneFrame image={active.image} title={active.title} className="w-[220px]" />
-            <div className="mt-6 flex flex-wrap justify-center gap-2 px-4">
-              {active.callouts.map((callout) => (
-                <span
-                  key={callout.text}
-                  className={`rounded-full px-3 py-1.5 text-xs font-medium ${calloutColors[callout.color]}`}
+          <div className="relative mt-16 flex justify-center">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={active.title}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className="relative w-[280px]"
+              >
+                <PhoneFrame image={active.image} title={active.title} className="w-full" />
+                <svg
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 h-full w-full overflow-visible"
+                  viewBox={`0 0 ${PHONE_W} ${PHONE_H}`}
                 >
-                  {callout.text}
-                </span>
-              ))}
-            </div>
-          </motion.div>
-        </AnimatePresence>
+                  {active.callouts.map((callout, index) => (
+                    <CalloutConnector key={callout.text} callout={callout} index={index} />
+                  ))}
+                </svg>
+                {active.callouts.map((callout, index) => (
+                  <CalloutBubble key={callout.text} callout={callout} index={index} />
+                ))}
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          <div className="relative z-10 mx-auto mt-10 max-w-xl px-6 text-center">
+            <h3 className="text-xl font-semibold text-white">{active.title}</h3>
+            <p className="mt-2 text-white/60">{active.description}</p>
+          </div>
+        </div>
       </div>
 
-      <div className="relative z-10 mx-auto mt-10 max-w-xl px-6 text-center">
-        <h3 className="text-xl font-semibold text-white">{active.title}</h3>
-        <p className="mt-2 text-white/60">{active.description}</p>
+      {/* Mobile / tablet: manual tabs, phone with callout chips stacked below */}
+      <div className="relative z-10 mt-10 lg:hidden">
+        <FeatureTabs activeIndex={mobileIndex} onSelect={setMobileIndex} />
+
+        <div className="mt-12 flex flex-col items-center">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={mobileActive.title}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.25 }}
+              className="flex flex-col items-center"
+            >
+              <PhoneFrame image={mobileActive.image} title={mobileActive.title} className="w-[220px]" />
+              <div className="mt-6 flex flex-wrap justify-center gap-2 px-4">
+                {mobileActive.callouts.map((callout) => (
+                  <span
+                    key={callout.text}
+                    className={`rounded-full px-3 py-1.5 text-xs font-medium ${calloutColors[callout.color]}`}
+                  >
+                    {callout.text}
+                  </span>
+                ))}
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        <div className="relative z-10 mx-auto mt-10 max-w-xl px-6 text-center">
+          <h3 className="text-xl font-semibold text-white">{mobileActive.title}</h3>
+          <p className="mt-2 text-white/60">{mobileActive.description}</p>
+        </div>
       </div>
     </section>
   );
