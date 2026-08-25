@@ -144,7 +144,7 @@ export default function LoyaltyBenefits() {
   }
 
   return (
-    <section className="bg-[#0a0e17] px-6 py-24">
+    <section id="loyalty" className="bg-[#0a0e17] px-6 py-24">
       <div className="mx-auto max-w-5xl">
         <div className="mx-auto max-w-2xl text-center">
           <p className="text-sm font-semibold tracking-wide text-[#FF9F1C] uppercase">

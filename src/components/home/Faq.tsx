@@ -113,7 +113,7 @@ export default function Faq() {
   const activeFaq = activeIndex !== null ? faqs[activeIndex] : null;
 
   return (
-    <section className="bg-[#f5f7fa] px-6 py-24">
+    <section id="faq" className="bg-[#f5f7fa] px-6 py-24">
       <div className="mx-auto max-w-3xl">
         <div className="text-center">
           <p className="text-sm font-semibold tracking-wide text-[#FF9F1C] uppercase">Ask BTTP</p>

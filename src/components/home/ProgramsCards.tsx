@@ -61,7 +61,7 @@ function MarqueeRow({
 
 export default function ProgramsCards() {
   return (
-    <section className="bg-[#f5f7fa] py-24">
+    <section id="programs" className="bg-[#f5f7fa] py-24">
       <div className="mx-auto max-w-5xl px-6 text-center">
         <p className="text-sm font-semibold tracking-wide text-[#FF9F1C] uppercase">
           Programs &amp; Cards

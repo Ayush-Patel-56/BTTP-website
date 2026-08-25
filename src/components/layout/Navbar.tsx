@@ -2,19 +2,30 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 const links = [
-  { href: "/point-calculator", label: "Point Calculator" },
   { href: "/#what-we-do", label: "What We Do" },
-  { href: "/pricing", label: "Pricing" },
-  { href: "/blog", label: "Blog" },
+  { href: "/#programs", label: "Programs" },
+  { href: "/#loyalty", label: "Loyalty" },
+  { href: "/#faq", label: "FAQ" },
   { href: "/#about-us", label: "About Us" },
 ];
 
 export default function Navbar() {
+  const pathname = usePathname();
   const [hidden, setHidden] = useState(false);
   const lastScrollY = useRef(0);
+
+  function handleAnchorClick(e: React.MouseEvent<HTMLAnchorElement>, href: string) {
+    const hash = href.split("#")[1];
+    if (!hash || pathname !== "/") return;
+
+    e.preventDefault();
+    document.getElementById(hash)?.scrollIntoView({ behavior: "smooth" });
+    window.history.replaceState(null, "", `#${hash}`);
+  }
 
   useEffect(() => {
     lastScrollY.current = window.scrollY;
@@ -61,6 +72,7 @@ export default function Navbar() {
             <li key={link.href}>
               <Link
                 href={link.href}
+                onClick={(e) => handleAnchorClick(e, link.href)}
                 className="nav-link hover:text-white"
               >
                 {link.label}
@@ -69,7 +81,8 @@ export default function Navbar() {
           ))}
         </ul>
         <Link
-          href="/#try-now"
+          href="/#join-waitlist"
+          onClick={(e) => handleAnchorClick(e, "/#join-waitlist")}
           className="flex shrink-0 items-center gap-2 rounded-full bg-blue-600 px-5 py-2.5 text-sm font-medium text-white shadow-inner hover:bg-blue-500"
         >
           Try Now
