@@ -264,12 +264,12 @@ export default function AiSection() {
         <div className="absolute right-0 bottom-0 h-[420px] w-[420px] translate-x-1/3 translate-y-1/3 rounded-full bg-blue-500/10 blur-[140px]" />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-2xl text-center">
+      <div className="relative z-10 mx-auto max-w-4xl text-center">
         <p className="text-sm font-semibold tracking-wide text-[#FF9F1C] uppercase">
           What We Do
         </p>
-        <h2 className="mt-3 text-4xl font-bold text-white sm:text-5xl">
-          Your Personal Points Nerd So You Don&apos;t Have To Become One
+        <h2 className="mt-3 text-xl font-bold text-white sm:text-2xl sm:whitespace-nowrap md:text-3xl lg:text-4xl">
+          Your Personal Points Nerd, So You Don&apos;t Have To Be One
         </h2>
         <p className="mx-auto mt-4 max-w-xl text-white/60">
           Your points are worth more than you think. Bring your credit card
