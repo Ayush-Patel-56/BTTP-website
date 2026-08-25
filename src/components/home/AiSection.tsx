@@ -20,11 +20,21 @@ type Feature = {
   callouts: Callout[];
 };
 
+const PHONE_W = 280;
+const PHONE_H = (PHONE_W * 2252) / 1084;
+
 const calloutColors: Record<CalloutColor, string> = {
   blue: "bg-blue-500 text-white",
   purple: "bg-violet-600 text-white",
   cyan: "bg-cyan-400 text-slate-900",
   dark: "bg-slate-800 text-white ring-1 ring-white/10",
+};
+
+const calloutStroke: Record<CalloutColor, string> = {
+  blue: "rgba(59,130,246,0.7)",
+  purple: "rgba(139,92,246,0.7)",
+  cyan: "rgba(34,211,238,0.7)",
+  dark: "rgba(255,255,255,0.4)",
 };
 
 const features: Feature[] = [
@@ -158,11 +168,44 @@ function CalloutBubble({ callout, index }: { callout: Callout; index: number }) 
       } ${isLeft ? "text-right" : "text-left"}`}
       style={{
         top: callout.top,
-        [isLeft ? "right" : "left"]: "calc(100% + 20px)",
+        [isLeft ? "right" : "left"]: "calc(100% + 44px)",
       }}
     >
       {callout.text}
     </motion.div>
+  );
+}
+
+function CalloutConnector({ callout, index }: { callout: Callout; index: number }) {
+  const isLeft = callout.side === "left";
+  const y = (parseFloat(callout.top) / 100) * PHONE_H + 18;
+  const x1 = isLeft ? 0 : PHONE_W;
+  const x2 = isLeft ? -38 : PHONE_W + 38;
+  const midX = isLeft ? -14 : PHONE_W + 14;
+  const midX2 = isLeft ? -28 : PHONE_W + 28;
+  const d = `M ${x1} ${y} C ${midX} ${y - 24}, ${midX2} ${y + 22}, ${x2} ${y - 4}`;
+  const stroke = calloutStroke[callout.color];
+
+  return (
+    <motion.g
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.3, delay: 0.05 + index * 0.06 }}
+    >
+      <circle cx={x1} cy={y} r={3} fill={stroke} />
+      <motion.path
+        d={d}
+        fill="none"
+        stroke={stroke}
+        strokeWidth={1.75}
+        strokeDasharray="4 6"
+        strokeLinecap="round"
+        initial={{ pathLength: 0 }}
+        animate={{ pathLength: 1 }}
+        transition={{ duration: 0.5, delay: 0.05 + index * 0.06, ease: "easeOut" }}
+      />
+      <circle cx={x2} cy={y - 4} r={2.5} fill={stroke} />
+    </motion.g>
   );
 }
 
@@ -238,6 +281,15 @@ export default function AiSection() {
             className="relative w-[280px]"
           >
             <PhoneFrame image={active.image} title={active.title} className="w-full" />
+            <svg
+              aria-hidden
+              className="pointer-events-none absolute inset-0 h-full w-full overflow-visible"
+              viewBox={`0 0 ${PHONE_W} ${PHONE_H}`}
+            >
+              {active.callouts.map((callout, index) => (
+                <CalloutConnector key={callout.text} callout={callout} index={index} />
+              ))}
+            </svg>
             {active.callouts.map((callout, index) => (
               <CalloutBubble key={callout.text} callout={callout} index={index} />
             ))}
