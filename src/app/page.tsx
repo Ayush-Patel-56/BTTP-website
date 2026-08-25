@@ -6,6 +6,7 @@ import ProgramsCards from "@/components/home/ProgramsCards";
 import LoyaltyBenefits from "@/components/home/LoyaltyBenefits";
 import Faq from "@/components/home/Faq";
 import AboutUs from "@/components/home/AboutUs";
+import Waitlist from "@/components/home/Waitlist";
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
       <LoyaltyBenefits />
       <Faq />
       <AboutUs />
+      <Waitlist />
     </>
   );
 }
