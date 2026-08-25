@@ -46,11 +46,13 @@ export default function AppShowcase() {
           viewport={{ once: true, amount: 0.2 }}
         >
           <motion.div variants={itemVariants}>
-            <p className="text-sm font-semibold tracking-wide text-[#FF9F1C] uppercase">
+            <p className="text-lg font-bold tracking-wide text-[#FF9F1C] uppercase sm:text-xl">
               The BTTP App
             </p>
-            <h2 className="mt-3 text-4xl font-bold text-black sm:text-5xl">
-              100,000 Points Doesn&apos;t Mean Much. ₹82,500 Does.
+            <h2 className="mt-3 text-4xl leading-tight font-bold text-black sm:text-5xl">
+              100,000 Points
+              <br />
+              ₹82,500 is the real value
             </h2>
             <p className="mt-5 max-w-md text-black/60">
               Back to the Points helps estimate the value of your rewards so
@@ -116,10 +118,7 @@ export default function AppShowcase() {
                 </span>
               </span>
             </div>
-            <p className="mt-3 text-xs text-black/40">
-              We&apos;re still in private beta, so the app isn&apos;t
-              available to download just yet.
-            </p>
+            <p className="mt-3 text-xs text-black/40">Coming Soon</p>
           </motion.div>
         </motion.div>
 
