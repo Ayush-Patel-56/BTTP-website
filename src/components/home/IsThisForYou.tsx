@@ -6,31 +6,31 @@ import { useMotionValue, useMotionValueEvent, useSpring } from "framer-motion";
 const items = [
   {
     number: "01",
-    titleTop: "You Don't Know",
-    titleBottom: "What Your Points Are Worth",
-    description:
-      "You've got points sitting on every card statement and honestly, you've never worked out what any of it is actually worth.",
-  },
-  {
-    number: "02",
     titleTop: "Your Points Are",
     titleBottom: "Scattered Everywhere",
     description:
       "A bit on this card, a bit on that program, each with its own expiry date nobody's tracking.",
   },
   {
-    number: "03",
-    titleTop: "No Single Dashboard",
-    titleBottom: "For All Your Points",
+    number: "02",
+    titleTop: "You Don't Know",
+    titleBottom: "What Your Points Are Worth",
     description:
-      "Your cards, airlines and hotels all live in separate apps with separate logins. There's nowhere to see everything you've earned in one place.",
+      "You've got points sitting on every card statement and honestly, you've never worked out what any of it is actually worth.",
   },
   {
-    number: "04",
+    number: "03",
     titleTop: "You Don't Know",
     titleBottom: "How To Redeem Them",
     description:
       "Move points to the wrong partner, or time it badly, and they're gone for good. You want a way to know you're making the right call.",
+  },
+  {
+    number: "04",
+    titleTop: "No Single Dashboard",
+    titleBottom: "For All Your Points",
+    description:
+      "Your cards, airlines and hotels all live in separate apps with separate logins. There's nowhere to see everything you've earned in one place.",
   },
   {
     number: "05",
