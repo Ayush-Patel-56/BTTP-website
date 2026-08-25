@@ -81,12 +81,13 @@ const features: Feature[] = [
   },
   {
     title: "Trip Planner",
-    description: "Turn a points balance sitting in an account into an actual trip you can book.",
+    description: "Search flights and hotels yourself, or tell us where you want to go and let the app plan it.",
+    image: "/travel.png",
     callouts: [
-      { text: "Get me to Bali in business class for under 60,000 points", top: "10%", side: "right", color: "blue" },
-      { text: "Delhi → London business class for 70K points", top: "36%", side: "left", color: "dark" },
-      { text: "Turn a balance into an actual bookable trip", top: "60%", side: "right", color: "purple" },
-      { text: "The best deal, not just any deal", top: "85%", side: "left", color: "cyan" },
+      { text: "Search it yourself, or let us plan it for you", top: "14%", side: "left", color: "blue" },
+      { text: "Bangalore → Singapore, set in seconds", top: "36%", side: "right", color: "dark" },
+      { text: "One tap to search flights across the trip", top: "67%", side: "left", color: "purple" },
+      { text: "Popular routes, ready to search instantly", top: "83%", side: "right", color: "cyan" },
     ],
   },
   {
