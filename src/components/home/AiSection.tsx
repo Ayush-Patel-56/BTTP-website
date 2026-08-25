@@ -71,15 +71,6 @@ const features: Feature[] = [
     ],
   },
   {
-    title: "Point Transfers",
-    description: "Move points between programs and let the app work out the conversion math.",
-    callouts: [
-      { text: "Axis Magnus → Etihad transfer ratio?", top: "16%", side: "right", color: "dark" },
-      { text: "Smarter to transfer now, or wait for a bonus?", top: "48%", side: "left", color: "blue" },
-      { text: "Move points without doing the math yourself", top: "78%", side: "right", color: "purple" },
-    ],
-  },
-  {
     title: "Trip Planner",
     description: "Search flights and hotels yourself, or tell us where you want to go and let the app plan it.",
     image: "/travel.png",
