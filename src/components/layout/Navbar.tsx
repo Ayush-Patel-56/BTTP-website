@@ -21,9 +21,14 @@ export default function Navbar() {
 
     function handleScroll() {
       const currentScrollY = window.scrollY;
-      const scrolledDown = currentScrollY > lastScrollY.current;
+      const delta = currentScrollY - lastScrollY.current;
 
-      setHidden(scrolledDown && currentScrollY > 80);
+      // Ignore sub-threshold deltas (trackpad inertia, layout jitter from
+      // scroll-linked animations elsewhere on the page) so the bar doesn't
+      // flicker when the user isn't actually scrolling.
+      if (Math.abs(delta) < 10) return;
+
+      setHidden(delta > 0 && currentScrollY > 80);
       lastScrollY.current = currentScrollY;
     }
 
