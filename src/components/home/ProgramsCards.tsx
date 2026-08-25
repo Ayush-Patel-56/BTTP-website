@@ -66,8 +66,10 @@ export default function ProgramsCards() {
         <p className="text-sm font-semibold tracking-wide text-[#FF9F1C] uppercase">
           Programs &amp; Cards
         </p>
-        <h2 className="mt-3 text-3xl font-bold text-black sm:text-4xl">
-          Turn Points Balances Into Boarding Passes
+        <h2 className="mt-3 text-3xl leading-tight font-bold text-black sm:text-4xl">
+          One Universe
+          <br />
+          All Your Points
         </h2>
       </div>
 
