@@ -1,137 +1,204 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import {
-  useMotionValueEvent,
-  useScroll,
-  useTransform,
-  type MotionValue,
-} from "framer-motion";
+import { useState } from "react";
+import Image from "next/image";
+import { AnimatePresence, motion } from "framer-motion";
 
-const features = [
+type CalloutColor = "blue" | "purple" | "cyan" | "dark";
+
+type Callout = {
+  text: string;
+  top: string;
+  side: "left" | "right";
+  color: CalloutColor;
+};
+
+type Feature = {
+  title: string;
+  description: string;
+  image?: string;
+  callouts: Callout[];
+};
+
+const calloutColors: Record<CalloutColor, string> = {
+  blue: "bg-blue-500 text-white",
+  purple: "bg-violet-600 text-white",
+  cyan: "bg-cyan-400 text-slate-900",
+  dark: "bg-slate-800 text-white ring-1 ring-white/10",
+};
+
+const features: Feature[] = [
   {
     title: "Rewards Dashboard",
-    description: "See every point sitting across your cards, airlines, and hotel accounts, all on one screen.",
+    description: "Total rewards value, a breakdown by source, missed-value alerts, and live updates - all in one dashboard.",
+    image: "/rewards-dashboard.png",
+    callouts: [
+      { text: "₹1,84,650 tracked across every card", top: "10%", side: "left", color: "blue" },
+      { text: "₹26,200 missed in the last 3 months", top: "34%", side: "right", color: "purple" },
+      { text: "18,400 points expiring in 8 days", top: "60%", side: "left", color: "dark" },
+      { text: "Cards, airlines & hotels, one screen", top: "80%", side: "right", color: "cyan" },
+    ],
   },
   {
     title: "Missed Value Alerts",
     description: "Get flagged the moment a reward is about to expire unused.",
+    callouts: [
+      { text: "Which of my cards has points about to expire?", top: "14%", side: "left", color: "blue" },
+      { text: "Get flagged before a reward disappears", top: "38%", side: "right", color: "purple" },
+      { text: "18,400 points expiring in 8 days — act now", top: "62%", side: "left", color: "dark" },
+      { text: "Never lose a point to silent expiry again", top: "82%", side: "right", color: "cyan" },
+    ],
   },
   {
     title: "Card Recommendations",
     description: "Know which card to swipe for every purchase, based on what actually earns the most.",
+    callouts: [
+      { text: "Which card earns the most at Zara?", top: "14%", side: "left", color: "purple" },
+      { text: "Best card for dining near me?", top: "38%", side: "right", color: "blue" },
+      { text: "Know your top card before you tap", top: "62%", side: "left", color: "cyan" },
+      { text: "Every purchase, matched to the right card", top: "82%", side: "right", color: "dark" },
+    ],
   },
   {
     title: "Point Transfers",
     description: "Move points between programs and let the app work out the conversion math.",
+    callouts: [
+      { text: "Axis Magnus → Etihad transfer ratio?", top: "14%", side: "left", color: "dark" },
+      { text: "Smarter to transfer now, or wait for a bonus?", top: "38%", side: "right", color: "blue" },
+      { text: "Move points without doing the math yourself", top: "62%", side: "left", color: "purple" },
+      { text: "Every transfer partner, in one place", top: "82%", side: "right", color: "cyan" },
+    ],
   },
   {
     title: "Trip Planner",
     description: "Turn a points balance sitting in an account into an actual trip you can book.",
+    callouts: [
+      { text: "Get me to Bali in business class for under 60,000 points", top: "14%", side: "left", color: "blue" },
+      { text: "Delhi → London business class for 70K points", top: "40%", side: "right", color: "dark" },
+      { text: "Turn a balance into an actual bookable trip", top: "64%", side: "left", color: "purple" },
+      { text: "The best deal, not just any deal", top: "82%", side: "right", color: "cyan" },
+    ],
   },
   {
     title: "Quick Pay",
     description: "Pay off credit card bills and rent right from inside the app.",
+    callouts: [
+      { text: "Pay your card bill without leaving the app", top: "22%", side: "left", color: "purple" },
+      { text: "Rent, EMIs & bills — one tap away", top: "48%", side: "right", color: "blue" },
+      { text: "No more switching between five apps", top: "74%", side: "left", color: "dark" },
+    ],
   },
 ];
 
-function PhoneFrame() {
-  return (
-    <div className="rounded-[2.75rem] border-[10px] border-neutral-800 bg-neutral-800 p-1.5 shadow-2xl shadow-black/40">
-      <div className="relative h-3 w-full">
-        <span className="absolute top-0 left-1/2 h-3 w-24 -translate-x-1/2 rounded-b-xl bg-neutral-800" />
-      </div>
-      <div className="relative aspect-[9/19.5] w-[180px] overflow-hidden rounded-[2rem] bg-gradient-to-b from-white/10 via-white/5 to-white/[0.02]">
-        <div className="absolute inset-x-5 top-7 animate-pulse space-y-4">
-          <div className="h-2.5 w-2/3 rounded-full bg-white/15" />
-          <div className="h-2 w-1/2 rounded-full bg-white/10" />
-          <div className="mt-5 h-20 rounded-2xl bg-white/10" />
-          <div className="h-2 w-full rounded-full bg-white/10" />
-          <div className="h-2 w-3/4 rounded-full bg-white/10" />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function PhoneCard({
-  feature,
-  index,
-  count,
-  scrollYProgress,
+function PhoneFrame({
+  image,
+  title,
+  className = "w-[180px]",
 }: {
-  feature: (typeof features)[number];
-  index: number;
-  count: number;
-  scrollYProgress: MotionValue<number>;
+  image?: string;
+  title: string;
+  className?: string;
 }) {
-  const cardRef = useRef<HTMLDivElement>(null);
-
-  const start = index / count;
-  const mid = (index + 0.5) / count;
-  const end = (index + 1) / count;
-
-  const scale = useTransform(scrollYProgress, [start, mid, end], [0.88, 1, 0.88]);
-  const opacity = useTransform(scrollYProgress, [start, mid, end], [0.4, 1, 0.4]);
-
-  // See Hero.tsx: a useTransform whose output range decreases doesn't
-  // reliably flush through the style prop once it settles at its clamped
-  // end. Writing scale/opacity to the DOM by hand sidesteps that.
-  useMotionValueEvent(scale, "change", (v) => {
-    if (cardRef.current) cardRef.current.style.transform = `scale(${v})`;
-  });
-  useMotionValueEvent(opacity, "change", (v) => {
-    if (cardRef.current) cardRef.current.style.opacity = String(v);
-  });
-
   return (
-    <div
-      ref={cardRef}
-      className="flex w-[260px] shrink-0 flex-col items-center text-center"
-    >
-      <PhoneFrame />
-      <h3 className="mt-8 text-xl font-semibold text-white">{feature.title}</h3>
-      <p className="mt-2 text-sm text-white/60">{feature.description}</p>
+    <div className={`relative aspect-[1084/2252] drop-shadow-[0_20px_35px_rgba(0,0,0,0.45)] ${className}`}>
+      <div
+        className={`absolute overflow-hidden ${
+          image ? "bg-white" : "bg-gradient-to-b from-white/10 via-white/5 to-white/[0.02]"
+        }`}
+        style={{
+          top: "1.5986%",
+          left: "3.3210%",
+          right: "3.4133%",
+          bottom: "1.5986%",
+          borderRadius: "13.80% / 6.40%",
+        }}
+      >
+        {image ? (
+          <div className="absolute inset-0 origin-top scale-[0.94]">
+            <Image
+              src={image}
+              alt={`${title} screen in the Back to the Points app`}
+              fill
+              unoptimized
+              className="object-cover object-top"
+            />
+          </div>
+        ) : (
+          <div className="absolute inset-x-3 top-5 animate-pulse space-y-4">
+            <div className="h-2.5 w-2/3 rounded-full bg-white/15" />
+            <div className="h-2 w-1/2 rounded-full bg-white/10" />
+            <div className="mt-5 h-20 rounded-2xl bg-white/10" />
+            <div className="h-2 w-full rounded-full bg-white/10" />
+            <div className="h-2 w-3/4 rounded-full bg-white/10" />
+          </div>
+        )}
+      </div>
+      <Image
+        src="/phone-frame.png"
+        alt=""
+        aria-hidden
+        fill
+        unoptimized
+        className="pointer-events-none object-contain"
+      />
     </div>
   );
 }
 
-function DesktopGallery({ containerRef }: { containerRef: React.RefObject<HTMLDivElement | null> }) {
-  const trackRef = useRef<HTMLDivElement>(null);
-  const trackWrapRef = useRef<HTMLDivElement>(null);
-  const progressRef = useRef<HTMLDivElement>(null);
-  const maxDistance = useRef(0);
+function CalloutBubble({ callout, index }: { callout: Callout; index: number }) {
+  const isLeft = callout.side === "left";
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 10, scale: 0.9 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={{ opacity: 0, y: -6, scale: 0.9 }}
+      transition={{ duration: 0.35, delay: 0.08 + index * 0.06 }}
+      className={`absolute w-max max-w-[210px] rounded-2xl px-4 py-2.5 text-sm leading-snug font-medium shadow-lg shadow-black/30 ${
+        calloutColors[callout.color]
+      } ${isLeft ? "text-right" : "text-left"}`}
+      style={{
+        top: callout.top,
+        [isLeft ? "right" : "left"]: "calc(100% + 20px)",
+      }}
+    >
+      {callout.text}
+    </motion.div>
+  );
+}
 
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"],
-  });
+function FeatureTabs({
+  activeIndex,
+  onSelect,
+}: {
+  activeIndex: number;
+  onSelect: (index: number) => void;
+}) {
+  return (
+    <div className="flex flex-wrap justify-center gap-2 px-4">
+      {features.map((feature, index) => (
+        <button
+          key={feature.title}
+          type="button"
+          onClick={() => onSelect(index)}
+          className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+            index === activeIndex
+              ? "bg-[#FF9F1C] text-black"
+              : "bg-white/5 text-white/60 hover:bg-white/10 hover:text-white"
+          }`}
+        >
+          {feature.title}
+        </button>
+      ))}
+    </div>
+  );
+}
 
-  const trackX = useTransform(scrollYProgress, (p) => -p * maxDistance.current);
-  const progressWidth = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
-
-  useMotionValueEvent(trackX, "change", (v) => {
-    if (trackRef.current) trackRef.current.style.transform = `translateX(${v}px)`;
-  });
-  useMotionValueEvent(progressWidth, "change", (v) => {
-    if (progressRef.current) progressRef.current.style.width = v;
-  });
-
-  useEffect(() => {
-    function measure() {
-      if (!trackRef.current || !trackWrapRef.current) return;
-      maxDistance.current = Math.max(
-        0,
-        trackRef.current.scrollWidth - trackWrapRef.current.clientWidth
-      );
-    }
-    measure();
-    window.addEventListener("resize", measure);
-    return () => window.removeEventListener("resize", measure);
-  }, []);
+export default function AiSection() {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const active = features[activeIndex];
 
   return (
-    <div className="relative hidden h-screen flex-col items-center justify-center gap-12 overflow-hidden sm:flex">
+    <section id="what-we-do" className="relative overflow-hidden bg-[#0B1220] px-6 py-24">
       <div
         aria-hidden
         className="pointer-events-none absolute top-1/3 left-1/2 h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#FF9F1C]/10 blur-[140px]"
@@ -141,81 +208,72 @@ function DesktopGallery({ containerRef }: { containerRef: React.RefObject<HTMLDi
         className="pointer-events-none absolute right-0 bottom-0 h-[420px] w-[420px] translate-x-1/3 translate-y-1/3 rounded-full bg-blue-500/10 blur-[140px]"
       />
 
-      <div className="relative z-10 mx-auto max-w-2xl px-6 text-center">
+      <div className="relative z-10 mx-auto max-w-2xl text-center">
         <p className="text-sm font-semibold tracking-wide text-[#FF9F1C] uppercase">
           What We Do
         </p>
         <h2 className="mt-3 text-4xl font-bold text-white sm:text-5xl">
           Your Personal Points Nerd. So You Don&apos;t Have To Become One.
         </h2>
-        <p className="mx-auto mt-5 max-w-xl text-white/60">
+        <p className="mx-auto mt-4 max-w-xl text-white/60">
           Your points are worth more than you think. Bring your credit card
           rewards, airline miles and hotel points together and discover what
           they can actually get you.
         </p>
-        <div className="mx-auto mt-8 h-1 w-40 overflow-hidden rounded-full bg-white/10">
-          <div ref={progressRef} className="h-full rounded-full bg-[#FF9F1C]" />
-        </div>
       </div>
 
-      <div ref={trackWrapRef} className="relative z-10 w-full overflow-hidden">
-        <div
-          ref={trackRef}
-          className="flex gap-16 pl-6 will-change-transform sm:pl-[max(1.5rem,calc((100vw-64rem)/2))]"
-        >
-          {features.map((feature, index) => (
-            <PhoneCard
-              key={feature.title}
-              feature={feature}
-              index={index}
-              count={features.length}
-              scrollYProgress={scrollYProgress}
-            />
-          ))}
-          <div className="w-6 shrink-0 sm:w-[max(1.5rem,calc((100vw-64rem)/2))]" />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-export default function AiSection() {
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  return (
-    <section id="what-we-do" className="relative bg-[#0B1220] px-6 py-24">
-      <div className="relative mx-auto max-w-5xl text-center sm:hidden">
-        <p className="text-sm font-semibold tracking-wide text-[#FF9F1C] uppercase">
-          What We Do
-        </p>
-        <h2 className="mt-3 text-4xl font-bold text-white">
-          Everything you need to actually use your rewards.
-        </h2>
-        <p className="mx-auto mt-5 max-w-xl text-white/60">
-          Here&apos;s a quick look at everything the app does, from tracking
-          every point to catching the ones you&apos;re about to lose.
-        </p>
+      <div className="relative z-10 mt-10">
+        <FeatureTabs activeIndex={activeIndex} onSelect={setActiveIndex} />
       </div>
 
-      <div ref={containerRef} className="relative hidden h-[400vh] sm:block">
-        <div className="sticky top-0">
-          <DesktopGallery containerRef={containerRef} />
-        </div>
-      </div>
-
-      <div className="relative z-10 mt-12 -mx-6 flex snap-x snap-mandatory gap-6 overflow-x-auto px-6 pb-4 sm:hidden">
-        {features.map((feature) => (
-          <div
-            key={feature.title}
-            className="flex w-[220px] shrink-0 snap-center flex-col items-center text-center"
+      {/* Desktop: phone with floating callout bubbles */}
+      <div className="relative z-10 mt-16 hidden justify-center lg:flex">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={active.title}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="relative w-[280px]"
           >
-            <PhoneFrame />
-            <h3 className="mt-6 text-lg font-semibold text-white">
-              {feature.title}
-            </h3>
-            <p className="mt-2 text-sm text-white/60">{feature.description}</p>
-          </div>
-        ))}
+            <PhoneFrame image={active.image} title={active.title} className="w-full" />
+            {active.callouts.map((callout, index) => (
+              <CalloutBubble key={callout.text} callout={callout} index={index} />
+            ))}
+          </motion.div>
+        </AnimatePresence>
+      </div>
+
+      {/* Mobile / tablet: phone with callout chips stacked below */}
+      <div className="relative z-10 mt-12 flex flex-col items-center lg:hidden">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={active.title}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.25 }}
+            className="flex flex-col items-center"
+          >
+            <PhoneFrame image={active.image} title={active.title} className="w-[220px]" />
+            <div className="mt-6 flex flex-wrap justify-center gap-2 px-4">
+              {active.callouts.map((callout) => (
+                <span
+                  key={callout.text}
+                  className={`rounded-full px-3 py-1.5 text-xs font-medium ${calloutColors[callout.color]}`}
+                >
+                  {callout.text}
+                </span>
+              ))}
+            </div>
+          </motion.div>
+        </AnimatePresence>
+      </div>
+
+      <div className="relative z-10 mx-auto mt-10 max-w-xl px-6 text-center">
+        <h3 className="text-xl font-semibold text-white">{active.title}</h3>
+        <p className="mt-2 text-white/60">{active.description}</p>
       </div>
     </section>
   );
