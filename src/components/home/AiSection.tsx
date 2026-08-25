@@ -91,11 +91,15 @@ const features: Feature[] = [
     ],
   },
   {
-    title: "Quick Pay",
-    description: "Pay off credit card bills and rent right from inside the app.",
+    title: "Smart Optimisation",
+    description: "See exactly how much value you left on the table, transaction by transaction, and which card would have earned more.",
+    image: "/optimize.png",
     callouts: [
-      { text: "Pay your card bill without leaving the app", top: "25%", side: "right", color: "purple" },
-      { text: "Rent, EMIs & bills — one tap away", top: "65%", side: "left", color: "blue" },
+      { text: "₹26,200 missed in the last 3 months — 26% lost", top: "26%", side: "left", color: "blue" },
+      { text: "114 transactions analyzed, 17 wrong cards used", top: "40%", side: "right", color: "dark" },
+      { text: "Dining accelerators weren't maximized", top: "53%", side: "left", color: "purple" },
+      { text: "Unlock the full report for every missed transaction", top: "64%", side: "right", color: "cyan" },
+      { text: "Emirates: HDFC Infinia would've earned more", top: "86%", side: "left", color: "blue" },
     ],
   },
 ];
