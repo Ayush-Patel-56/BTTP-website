@@ -118,7 +118,7 @@ export default function Faq() {
         <div className="text-center">
           <p className="text-sm font-semibold tracking-wide text-[#FF9F1C] uppercase">Ask BTTP</p>
           <h2 className="mt-3 text-3xl font-bold text-black sm:text-4xl">
-            Got questions? Our AI has answers.
+            Got questions? Our AI has answers
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-black/50">
             Tap a question below and see how the BTTP assistant responds.

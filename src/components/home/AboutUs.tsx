@@ -65,7 +65,7 @@ export default function AboutUs() {
         <div>
           <p className="text-sm font-semibold tracking-wide text-[#FF9F1C] uppercase">About Back to the Points</p>
           <h2 className="mt-4 text-3xl font-bold text-white sm:text-4xl md:text-[2.75rem] md:leading-tight">
-            Points Have A Point. They&apos;re Meant To Take You Places.
+            Points Have A Point They&apos;re Meant To Take You Places
           </h2>
           <p className="mt-6 max-w-md text-white/50">
             Most people let points expire simply because they lose track of them. Back to

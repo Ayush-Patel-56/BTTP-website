@@ -269,7 +269,7 @@ export default function AiSection() {
           What We Do
         </p>
         <h2 className="mt-3 text-4xl font-bold text-white sm:text-5xl">
-          Your Personal Points Nerd. So You Don&apos;t Have To Become One.
+          Your Personal Points Nerd So You Don&apos;t Have To Become One
         </h2>
         <p className="mx-auto mt-4 max-w-xl text-white/60">
           Your points are worth more than you think. Bring your credit card

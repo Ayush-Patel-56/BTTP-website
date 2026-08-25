@@ -67,7 +67,7 @@ export default function ProgramsCards() {
           Programs &amp; Cards
         </p>
         <h2 className="mt-3 text-3xl font-bold text-black sm:text-4xl">
-          Turn Points Balances Into Boarding Passes.
+          Turn Points Balances Into Boarding Passes
         </h2>
       </div>
 

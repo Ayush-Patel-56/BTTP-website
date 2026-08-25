@@ -151,7 +151,7 @@ export default function LoyaltyBenefits() {
             Real Redemptions
           </p>
           <h2 className="mt-3 text-3xl font-bold text-white sm:text-4xl">
-            Same Points. Better Trip.
+            Same Points Better Trip
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-white/50">
             Not every redemption gives you the same value. Back to the

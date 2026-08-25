@@ -28,7 +28,7 @@ export default function Waitlist() {
         <div>
           <p className="text-sm font-semibold tracking-wide text-[#FF9F1C] uppercase">Join The Waitlist</p>
           <h2 className="mt-4 text-3xl font-bold text-white sm:text-4xl md:text-[2.75rem] md:leading-tight">
-            Be First To Get Every Point Back.
+            Be First To Get Every Point Back
           </h2>
           <p className="mt-6 max-w-md text-white/50">
             We&apos;re opening up access in waves. Leave your name and email and we&apos;ll let you
