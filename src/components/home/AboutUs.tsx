@@ -1,4 +1,4 @@
-function EyeIcon({ className }: { className?: string }) {
+function TagIcon({ className }: { className?: string }) {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -9,52 +9,52 @@ function EyeIcon({ className }: { className?: string }) {
       strokeLinejoin="round"
       className={className}
     >
-      <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" />
-      <circle cx="12" cy="12" r="3" />
+      <path d="M12.6 2H4a2 2 0 0 0-2 2v8.6a2 2 0 0 0 .59 1.41l9.4 9.4a2 2 0 0 0 2.82 0l6.6-6.6a2 2 0 0 0 0-2.82l-9.4-9.4A2 2 0 0 0 12.6 2Z" />
+      <circle cx="7.5" cy="7.5" r="1.5" fill="currentColor" stroke="none" />
     </svg>
   );
 }
 
-function BoltIcon({ className }: { className?: string }) {
+function ClockIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 7v5l3.5 2" />
+    </svg>
+  );
+}
+
+function PlaneIcon({ className }: { className?: string }) {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
-      <path d="M13 2 4 14h6l-1 8 9-12h-6z" />
-    </svg>
-  );
-}
-
-function WalletIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-    >
-      <rect x="2" y="6" width="20" height="12" rx="2" />
-      <circle cx="15" cy="12" r="1.5" fill="currentColor" stroke="none" />
+      <path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-3 2v1.5l4.5-1.5 4.5 1.5V21l-3-2v-5.5z" />
     </svg>
   );
 }
 
 const pillars = [
   {
-    title: "Transparency",
-    description: "See exactly what every point and mile is worth, in one place, with no hidden math.",
-    Icon: EyeIcon,
+    title: "Know What It's Worth",
+    description: "You always know what your points are worth. No hidden math, no guesswork.",
+    Icon: TagIcon,
   },
   {
-    title: "Automation",
-    description: "We track balances and expiry dates for you, so nothing slips through unnoticed.",
-    Icon: BoltIcon,
+    title: "We Track The Details",
+    description: "We watch your balances and expiry dates in the background so you don't have to.",
+    Icon: ClockIcon,
   },
   {
-    title: "Real Savings",
-    description: "Every recommendation points to an actual flight, hotel night, or upgrade you can book today.",
-    Icon: WalletIcon,
+    title: "Bookable, Not Just Visible",
+    description: "Suggestions are tied to real flights and hotel nights, things you can actually book.",
+    Icon: PlaneIcon,
   },
 ];
 
@@ -68,9 +68,9 @@ export default function AboutUs() {
             Points Have A Point. They&apos;re Meant To Take You Places.
           </h2>
           <p className="mt-6 max-w-md text-white/50">
-            Back to the Points was built after watching one too many miles expire unused. We
-            connect your cards and loyalty programs, tell you what they&apos;re actually
-            worth, and get you to redemption before the points quietly disappear.
+            Most people let points expire simply because they lose track of them. Back to
+            the Points connects your cards and loyalty programs, shows what each point is
+            worth, and helps you redeem before it&apos;s gone.
           </p>
         </div>
 
