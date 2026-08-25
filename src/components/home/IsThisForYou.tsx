@@ -198,22 +198,9 @@ export default function IsThisForYou() {
   return (
     <section className="bg-[#0B1220] px-6 py-24">
       <div className="mx-auto max-w-5xl">
-        <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-xl font-bold text-white sm:text-2xl">
-            You Wouldn&apos;t Ignore{" "}
-            <span className="text-[#FF9F1C]">₹50,000</span> In Your Bank
-            Account. So Why Ignore It In Points?
-          </h2>
-          <p className="mt-5 text-white/60">
-            Reward points are value you&apos;ve already earned. The problem?
-            They&apos;re scattered across multiple cards, airlines and
-            hotels, each with different rules, values and expiry dates. We
-            make sense of them for you.
-          </p>
-        </div>
-        <p className="mt-16 mb-16 text-center text-sm font-semibold tracking-wide text-white/50 uppercase">
-          Is this for you?
-        </p>
+        <h2 className="mb-16 text-center text-4xl font-bold text-white sm:text-5xl">
+          Is This For You?
+        </h2>
         <div
           ref={containerRef}
           className="relative grid grid-cols-1 gap-y-16 sm:grid-cols-[1fr_2px_1fr] sm:gap-x-10 sm:gap-y-20"
