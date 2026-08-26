@@ -48,9 +48,9 @@ export default function AppShowcase() {
           <motion.div variants={itemVariants}>
             <p className="section-eyebrow">The BTTP App</p>
             <h2 className="section-title text-black">
-              100,000 Points
+              100,000 Points vs
               <br />
-              ₹82,500 is the real value
+              ₹82,500 is real value
             </h2>
             <p className="mt-5 max-w-md text-black/60">
               Back to the Points helps estimate the value of your rewards so
