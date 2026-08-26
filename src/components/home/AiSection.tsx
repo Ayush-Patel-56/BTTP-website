@@ -77,7 +77,6 @@ const features: Feature[] = [
         color: "dark",
         targetX: 80,
       },
-      { text: "Unused value sitting on this card", top: "66%", side: "left", color: "purple", targetX: 30 },
       { text: "One tap to pay, redeem or check offers", top: "78%", side: "right", color: "cyan", targetX: 78 },
     ],
   },
@@ -88,8 +87,6 @@ const features: Feature[] = [
     image: "/travel.png",
     callouts: [
       { text: "Search it yourself, or let the app plan it for you", top: "13%", side: "left", color: "blue" },
-      { text: "Set your route in seconds", top: "32%", side: "right", color: "dark" },
-      { text: "One tap to search flights across the trip", top: "61%", side: "left", color: "purple" },
       { text: "Popular routes, ready to search instantly", top: "75%", side: "right", color: "cyan" },
     ],
   },
@@ -99,10 +96,7 @@ const features: Feature[] = [
       "Goes through your spending transaction by transaction, shows exactly how much value you left on the table, and points out which card would have earned more each time.",
     image: "/optimize.png",
     callouts: [
-      { text: "Total value missed over the last few months", top: "23%", side: "left", color: "blue" },
       { text: "Every transaction checked for the wrong card used", top: "37%", side: "right", color: "dark" },
-      { text: "Spots accelerators you didn't fully use", top: "46%", side: "left", color: "purple" },
-      { text: "Full report on every missed transaction", top: "58%", side: "right", color: "cyan" },
       { text: "Shows which card would've earned more, each time", top: "82%", side: "left", color: "blue" },
     ],
   },
