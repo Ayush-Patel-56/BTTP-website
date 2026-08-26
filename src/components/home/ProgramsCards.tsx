@@ -63,10 +63,8 @@ export default function ProgramsCards() {
   return (
     <section id="programs" className="bg-[#f5f7fa] py-24">
       <div className="mx-auto max-w-5xl px-6 text-center">
-        <p className="text-sm font-semibold tracking-wide text-[#FF9F1C] uppercase">
-          Programs &amp; Cards
-        </p>
-        <h2 className="mt-3 text-3xl leading-tight font-bold text-black sm:text-4xl">
+        <p className="section-eyebrow">Programs &amp; Cards</p>
+        <h2 className="section-title text-black">
           One Universe
           <br />
           All Your Points

@@ -147,12 +147,8 @@ export default function LoyaltyBenefits() {
     <section id="loyalty" className="bg-[#0a0e17] px-6 py-24">
       <div className="mx-auto max-w-5xl">
         <div className="mx-auto max-w-2xl text-center">
-          <p className="text-sm font-semibold tracking-wide text-[#FF9F1C] uppercase">
-            Real Redemptions
-          </p>
-          <h2 className="mt-3 text-3xl font-bold text-white sm:text-4xl">
-            Same Points Better Trip
-          </h2>
+          <p className="section-eyebrow">Real Redemptions</p>
+          <h2 className="section-title text-white">Same Points Better Trip</h2>
           <p className="mx-auto mt-4 max-w-xl text-white/50">
             Not every redemption gives you the same value. Back to the
             Points helps you compare your options before you move a single

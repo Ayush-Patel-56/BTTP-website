@@ -127,6 +127,27 @@ body {
   }
 }
 
+.section-eyebrow {
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #ff9f1c;
+}
+
+.section-title {
+  margin-top: 1rem;
+  font-size: 2.25rem;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+@media (min-width: 640px) {
+  .section-title {
+    font-size: 3rem;
+  }
+}
+
 .hero-reveal {
   clip-path: inset(0 100% 0 0);
   animation: hero-reveal 3.5s ease-out forwards;

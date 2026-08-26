@@ -63,8 +63,8 @@ export default function AboutUs() {
     <section id="about-us" className="bg-[#0a0e17] px-6 py-24">
       <div className="mx-auto grid max-w-6xl gap-16 md:grid-cols-2 md:items-center">
         <div>
-          <p className="text-sm font-semibold tracking-wide text-[#FF9F1C] uppercase">About Back to the Points</p>
-          <h2 className="mt-4 text-3xl font-bold text-white sm:text-4xl md:text-[2.75rem] md:leading-tight">
+          <p className="section-eyebrow">About Back to the Points</p>
+          <h2 className="section-title text-white">
             Points Have A Point They&apos;re Meant To Take You Places
           </h2>
           <p className="mt-6 max-w-md text-white/50">

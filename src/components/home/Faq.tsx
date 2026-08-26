@@ -116,8 +116,8 @@ export default function Faq() {
     <section id="faq" className="bg-[#f5f7fa] px-6 py-24">
       <div className="mx-auto max-w-3xl">
         <div className="text-center">
-          <p className="text-sm font-semibold tracking-wide text-[#FF9F1C] uppercase">Ask BTTP</p>
-          <h2 className="mt-3 text-3xl font-bold text-black sm:text-4xl">
+          <p className="section-eyebrow">Ask BTTP</p>
+          <h2 className="section-title text-black">
             Got questions? Our AI has answers
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-black/50">

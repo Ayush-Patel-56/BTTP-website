@@ -46,10 +46,8 @@ export default function AppShowcase() {
           viewport={{ once: true, amount: 0.2 }}
         >
           <motion.div variants={itemVariants}>
-            <p className="text-lg font-bold tracking-wide text-[#FF9F1C] uppercase sm:text-xl">
-              The BTTP App
-            </p>
-            <h2 className="mt-3 text-4xl leading-tight font-bold text-black sm:text-5xl">
+            <p className="section-eyebrow">The BTTP App</p>
+            <h2 className="section-title text-black">
               100,000 Points
               <br />
               ₹82,500 is the real value
