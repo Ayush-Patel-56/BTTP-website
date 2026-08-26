@@ -40,57 +40,62 @@ const calloutStroke: Record<CalloutColor, string> = {
 const features: Feature[] = [
   {
     title: "Rewards Dashboard",
-    description: "Total rewards value, a breakdown by source, missed-value alerts, and live updates - all in one dashboard.",
+    description:
+      "See every credit card, airline mile and hotel point in one place. Track exactly what your rewards are worth right now, catch value you're about to lose, and get nudged before anything expires.",
     image: "/rewards-dashboard.png",
     callouts: [
-      { text: "₹1,84,650 tracked across every card", top: "9%", side: "left", color: "blue" },
-      { text: "₹26,200 missed in the last 3 months", top: "32%", side: "right", color: "purple" },
-      { text: "18,400 points expiring in 8 days", top: "58%", side: "left", color: "dark" },
-      { text: "Cards, airlines & hotels, one screen", top: "80%", side: "right", color: "cyan" },
+      { text: "Total rewards value, tracked across every card", top: "17%", side: "left", color: "blue" },
+      { text: "Cards, airlines and hotels, all on one screen", top: "34%", side: "right", color: "cyan" },
+      { text: "Flags the value you missed in recent months", top: "48%", side: "left", color: "purple" },
+      { text: "Surfaces points expiring soon, before they lapse", top: "85%", side: "right", color: "dark" },
     ],
   },
   {
     title: "Card Recommendations",
-    description: "Know which card to swipe for every purchase, based on what actually earns the most.",
+    description:
+      "Compares every card you hold against how you actually spend, then ranks them by what they'd realistically earn you — so you always know which one to swipe, for every category.",
     image: "/recommendation.png",
     callouts: [
-      { text: "₹1,66,000 potential yearly returns (3.7%)", top: "12%", side: "right", color: "blue" },
-      { text: "3 of 5 cards are realistic for your profile", top: "44%", side: "left", color: "purple" },
-      { text: "Tata Neu Infinity: 4x groceries & dining", top: "74%", side: "right", color: "cyan" },
+      { text: "Estimated yearly returns across your spending", top: "33%", side: "right", color: "blue" },
+      { text: "Ranks which cards genuinely fit your profile", top: "45%", side: "left", color: "purple" },
+      { text: "Best card for each category, like dining or groceries", top: "68%", side: "right", color: "cyan" },
     ],
   },
   {
     title: "Missed Value Alerts",
-    description: "Cards that need attention get flagged automatically, so you can pay, redeem or check offers before value slips away.",
+    description:
+      "Keeps watch over every card so nothing quietly expires. Cards that need attention get flagged automatically, with one tap to pay, redeem or check offers before that value is gone.",
     image: "/wallet.png",
     callouts: [
-      { text: "12.4K points at risk right now", top: "22%", side: "left", color: "blue" },
-      { text: "Needs attention, flagged automatically", top: "48%", side: "right", color: "dark" },
-      { text: "HDFC Infinia: ₹82,400 in points", top: "72%", side: "left", color: "purple" },
-      { text: "Pay, check offers, or redeem — per card", top: "85%", side: "right", color: "cyan" },
+      { text: "Points at risk of expiring unused", top: "20%", side: "left", color: "blue" },
+      { text: "Cards needing attention, flagged automatically", top: "43%", side: "right", color: "dark" },
+      { text: "Unused value sitting on this card", top: "66%", side: "left", color: "purple" },
+      { text: "One tap to pay, redeem or check offers", top: "78%", side: "right", color: "cyan" },
     ],
   },
   {
     title: "Trip Planner",
-    description: "Search flights and hotels yourself, or tell us where you want to go and let the app plan it.",
+    description:
+      "Search flights and hotels yourself, or tell the app where you want to go and let it build the route. Compare options across the whole trip without switching tabs.",
     image: "/travel.png",
     callouts: [
-      { text: "Search it yourself, or let us plan it for you", top: "14%", side: "left", color: "blue" },
-      { text: "Bangalore → Singapore, set in seconds", top: "36%", side: "right", color: "dark" },
-      { text: "One tap to search flights across the trip", top: "67%", side: "left", color: "purple" },
-      { text: "Popular routes, ready to search instantly", top: "83%", side: "right", color: "cyan" },
+      { text: "Search it yourself, or let the app plan it for you", top: "13%", side: "left", color: "blue" },
+      { text: "Set your route in seconds", top: "32%", side: "right", color: "dark" },
+      { text: "One tap to search flights across the trip", top: "61%", side: "left", color: "purple" },
+      { text: "Popular routes, ready to search instantly", top: "75%", side: "right", color: "cyan" },
     ],
   },
   {
     title: "Smart Optimisation",
-    description: "See exactly how much value you left on the table, transaction by transaction, and which card would have earned more.",
+    description:
+      "Goes through your spending transaction by transaction, shows exactly how much value you left on the table, and points out which card would have earned more each time.",
     image: "/optimize.png",
     callouts: [
-      { text: "₹26,200 missed in the last 3 months — 26% lost", top: "26%", side: "left", color: "blue" },
-      { text: "114 transactions analyzed, 17 wrong cards used", top: "40%", side: "right", color: "dark" },
-      { text: "Dining accelerators weren't maximized", top: "53%", side: "left", color: "purple" },
-      { text: "Unlock the full report for every missed transaction", top: "64%", side: "right", color: "cyan" },
-      { text: "Emirates: HDFC Infinia would've earned more", top: "86%", side: "left", color: "blue" },
+      { text: "Total value missed over the last few months", top: "23%", side: "left", color: "blue" },
+      { text: "Every transaction checked for the wrong card used", top: "37%", side: "right", color: "dark" },
+      { text: "Spots accelerators you didn't fully use", top: "46%", side: "left", color: "purple" },
+      { text: "Full report on every missed transaction", top: "58%", side: "right", color: "cyan" },
+      { text: "Shows which card would've earned more, each time", top: "82%", side: "left", color: "blue" },
     ],
   },
 ];
