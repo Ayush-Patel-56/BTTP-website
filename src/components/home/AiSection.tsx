@@ -86,7 +86,7 @@ const features: Feature[] = [
       "Search flights and hotels yourself, or tell the app where you want to go and let it build the route. Compare options across the whole trip without switching tabs.",
     image: "/travel.png",
     callouts: [
-      { text: "Search it yourself, or let the app plan it for you", top: "13%", side: "left", color: "blue" },
+      { text: "Finds the best-value flights and hotels for you", top: "13%", side: "left", color: "blue" },
       { text: "Popular routes, ready to search instantly", top: "75%", side: "right", color: "cyan" },
     ],
   },
