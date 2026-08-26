@@ -2,34 +2,71 @@
 
 import { useEffect, useRef, useState } from "react";
 
+interface RedemptionOption {
+  label: string;
+  value: number;
+}
+
 interface Redemption {
   program: string;
   points: number;
-  benefit: string;
+  optionA: RedemptionOption;
+  optionB: RedemptionOption;
 }
 
 const redemptions: Redemption[] = [
-  { program: "Air India Maharaja", points: 40000, benefit: "Economy return to Dubai" },
-  { program: "British Airways Executive Club", points: 60000, benefit: "Business class to London" },
-  { program: "Marriott Bonvoy", points: 85000, benefit: "3 nights, Maldives overwater villa" },
-  { program: "Hilton Honors", points: 95000, benefit: "4 nights, Bali beach resort" },
-  { program: "Emirates Skywards", points: 65000, benefit: "Business class to Dubai" },
-  { program: "Singapore Airlines KrisFlyer", points: 55000, benefit: "Premium economy to Singapore" },
-  { program: "IHG One Rewards", points: 70000, benefit: "3 nights, Bangkok city hotel" },
-  { program: "Qatar Airways Privilege Club", points: 75000, benefit: "Business class to Doha" },
-  { program: "ALL – Accor Live Limitless", points: 50000, benefit: "2 nights, Paris luxury suite" },
-  { program: "United MileagePlus", points: 45000, benefit: "Economy return to New York" },
+  {
+    program: "Air India Maharaja",
+    points: 40000,
+    optionA: { label: "Economy return, Dubai", value: 18400 },
+    optionB: { label: "Upgrade existing Dubai booking to Business", value: 34000 },
+  },
+  {
+    program: "British Airways Executive Club",
+    points: 60000,
+    optionA: { label: "Reward flight, Business to London", value: 52200 },
+    optionB: { label: "Cash + points on the same route", value: 21000 },
+  },
+  {
+    program: "Marriott Bonvoy",
+    points: 85000,
+    optionA: { label: "3 nights, Maldives overwater villa", value: 68000 },
+    optionB: { label: "Transferred to airline miles", value: 29750 },
+  },
+  {
+    program: "Hilton Honors",
+    points: 95000,
+    optionA: { label: "4 nights, Bali beach resort", value: 42750 },
+    optionB: { label: "2 nights, Bali overwater suite", value: 57000 },
+  },
+  {
+    program: "Emirates Skywards",
+    points: 65000,
+    optionA: { label: "Business class, Dubai", value: 58500 },
+    optionB: { label: "Economy Dubai + upgrade voucher", value: 26000 },
+  },
+  {
+    program: "Singapore Airlines KrisFlyer",
+    points: 55000,
+    optionA: { label: "Premium economy, Singapore", value: 33000 },
+    optionB: { label: "Transferred to a hotel partner, 3 nights", value: 44000 },
+  },
+  {
+    program: "United MileagePlus",
+    points: 45000,
+    optionA: { label: "Economy return, New York", value: 31500 },
+    optionB: { label: "Partner redemption, Business short-haul", value: 49500 },
+  },
+  {
+    program: "Qatar Airways Privilege Club",
+    points: 75000,
+    optionA: { label: "Business class, Doha", value: 67500 },
+    optionB: { label: "Hotel stay via partner transfer", value: 30000 },
+  },
 ];
 
-const AUTOPLAY_MS = 4200;
-
-function PlaneIcon({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
-      <path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2.5 1.8V22l3.5-1 3.5 1v-1.2L13 19v-5.5l8 2.5z" />
-    </svg>
-  );
-}
+const AUTOPLAY_MS = 4800;
+const inr = (n: number) => `₹${n.toLocaleString("en-IN")}`;
 
 function ArrowButton({
   direction,
@@ -52,21 +89,48 @@ function ArrowButton({
   );
 }
 
-function Barcode() {
-  const bars = [2, 1, 3, 1, 1, 4, 2, 1, 3, 2, 1, 1, 4, 1, 2, 3, 1, 2, 1, 4, 2, 1, 3, 1];
+function OptionPanel({
+  label,
+  option,
+  isBetter,
+}: {
+  label: string;
+  option: RedemptionOption;
+  isBetter: boolean;
+}) {
   return (
-    <div className="flex h-16 items-stretch gap-[2px] sm:h-20">
-      {bars.map((width, index) => (
-        <span key={index} className="bg-[#1c1a15]/70" style={{ width: `${width}px` }} />
-      ))}
+    <div
+      className={`relative flex flex-1 flex-col justify-between rounded-2xl border-2 p-5 sm:p-6 ${
+        isBetter
+          ? "border-[#FF9F1C] bg-white"
+          : "border-black/10 bg-black/[0.03]"
+      }`}
+    >
+      {isBetter && (
+        <span className="absolute -top-3 left-5 rounded-full bg-[#FF9F1C] px-3 py-1 text-[10px] font-bold tracking-[0.15em] text-black uppercase">
+          Better value
+        </span>
+      )}
+      <div>
+        <p className="text-[11px] font-semibold tracking-[0.2em] text-black/35 uppercase">{label}</p>
+        <p className={`mt-1.5 text-base font-semibold sm:text-lg ${isBetter ? "text-[#141a29]" : "text-black/50"}`}>
+          {option.label}
+        </p>
+      </div>
+      <p className={`mt-6 text-3xl font-bold sm:text-4xl ${isBetter ? "text-[#141a29]" : "text-black/35"}`}>
+        {inr(option.value)}
+      </p>
     </div>
   );
 }
 
-function TicketCard({ entry, index }: { entry: Redemption; index: number }) {
+function ComparisonCard({ entry }: { entry: Redemption }) {
+  const aIsBetter = entry.optionA.value >= entry.optionB.value;
+  const delta = Math.abs(entry.optionA.value - entry.optionB.value);
+
   return (
-    <div className="flex overflow-hidden rounded-2xl bg-[#f7f3ea] shadow-2xl shadow-black/40">
-      <div className="flex flex-1 flex-col justify-between p-6 sm:p-10">
+    <div className="overflow-hidden rounded-3xl bg-[#f7f3ea] shadow-2xl shadow-black/40">
+      <div className="p-6 sm:p-10">
         <div className="flex items-start justify-between gap-4">
           <div>
             <p className="text-[11px] font-semibold tracking-[0.25em] text-black/40 uppercase">
@@ -74,47 +138,26 @@ function TicketCard({ entry, index }: { entry: Redemption; index: number }) {
             </p>
             <p className="mt-1 text-xl font-bold text-[#141a29] sm:text-2xl">{entry.program}</p>
           </div>
-          <PlaneIcon className="h-6 w-6 shrink-0 text-[#FF9F1C]" />
-        </div>
-
-        <div className="mt-8 flex flex-col gap-4 sm:mt-10 sm:flex-row sm:items-end sm:gap-6">
-          <div>
+          <div className="text-right">
             <p className="text-[11px] font-semibold tracking-[0.25em] text-black/40 uppercase">
-              Redeem
+              Points
             </p>
-            <p className="mt-1 text-2xl font-bold text-[#FF9F1C] sm:text-3xl">
-              {entry.points.toLocaleString()} pts
+            <p className="mt-1 text-xl font-bold text-[#FF9F1C] sm:text-2xl">
+              {entry.points.toLocaleString()}
             </p>
-          </div>
-          <div className="hidden flex-1 items-center gap-1 pb-2 text-black/20 sm:flex">
-            <span className="h-px flex-1 border-t-2 border-dashed border-black/15" />
-            <PlaneIcon className="h-3.5 w-3.5 shrink-0" />
-          </div>
-          <div>
-            <p className="text-[11px] font-semibold tracking-[0.25em] text-black/40 uppercase">
-              Receive
-            </p>
-            <p className="mt-1 text-xl font-bold text-[#141a29] sm:text-2xl">{entry.benefit}</p>
           </div>
         </div>
 
-        <div className="mt-8 flex items-center justify-between border-t border-dashed border-black/10 pt-4 text-[10px] font-medium tracking-widest text-black/30 uppercase">
-          <span>Ticket {String(index + 1).padStart(2, "0")} / {redemptions.length}</span>
-          <span>Valid on partner redemption</span>
+        <div className="mt-8 flex flex-col gap-4 sm:flex-row">
+          <OptionPanel label="Option A" option={entry.optionA} isBetter={aIsBetter} />
+          <OptionPanel label="Option B" option={entry.optionB} isBetter={!aIsBetter} />
         </div>
       </div>
 
-      <div className="relative w-0">
-        <div className="h-full border-l-2 border-dashed border-black/15" />
-        <span className="absolute top-0 left-0 h-6 w-6 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#0a0e17]" />
-        <span className="absolute bottom-0 left-0 h-6 w-6 -translate-x-1/2 translate-y-1/2 rounded-full bg-[#0a0e17]" />
-      </div>
-
-      <div className="flex w-14 shrink-0 flex-col items-center justify-between bg-[#efe9db] p-3 sm:w-16">
-        <Barcode />
-        <span className="-rotate-90 text-[9px] font-semibold tracking-[0.3em] whitespace-nowrap text-black/30 uppercase">
-          BTTP Rewards
-        </span>
+      <div className="border-t border-dashed border-black/10 bg-black/[0.03] px-6 py-4 text-center sm:px-10">
+        <p className="text-sm font-semibold text-[#141a29]">
+          Same {entry.points.toLocaleString()} points, {inr(delta)} apart.
+        </p>
       </div>
     </div>
   );
@@ -161,7 +204,7 @@ export default function LoyaltyBenefits() {
 
         <div className="mt-14 flex flex-col items-center">
           <div key={activeIndex} className="animate-ticket-in w-full max-w-2xl">
-            <TicketCard entry={redemptions[activeIndex]} index={activeIndex} />
+            <ComparisonCard entry={redemptions[activeIndex]} />
           </div>
 
           <div className="mt-8 flex items-center gap-6">
