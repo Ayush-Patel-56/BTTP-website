@@ -124,7 +124,7 @@ function PhoneFrame({
         }}
       >
         {image ? (
-          <div className="absolute inset-0 origin-top scale-[0.94]">
+          <div className="absolute inset-x-[3%] top-0 bottom-0">
             <Image
               src={image}
               alt={`${title} screen in the Back to the Points app`}
