@@ -13,7 +13,7 @@ export default function Hero() {
       <div className="relative mx-auto flex max-w-5xl flex-col items-center">
         <h1 className="hero-reveal text-balance text-5xl leading-tight font-bold tracking-tight text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.45)] sm:text-6xl md:text-7xl">
           You Wouldn&apos;t Ignore ₹50,000 In Your Bank Account
-          <br className="hidden sm:block" /> Why Ignore It In Points?
+          <br className="hidden sm:block" /> Why Ignore It In Loyalty Points?
         </h1>
         <p className="hero-reveal hero-reveal-delay-1 mt-8 text-2xl font-medium text-white/80 drop-shadow-[0_1px_6px_rgba(0,0,0,0.4)] sm:text-3xl">
           You Earned The Points Now Make Them Count
