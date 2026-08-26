@@ -11,6 +11,8 @@ type Callout = {
   top: string;
   side: "left" | "right";
   color: CalloutColor;
+  /** How far into the phone screen (0-100% of phone width) the pointer line reaches, to land on the specific UI element being called out. */
+  targetX?: number;
 };
 
 type Feature = {
@@ -67,10 +69,16 @@ const features: Feature[] = [
       "Keeps watch over every card so nothing quietly expires. Cards that need attention get flagged automatically, with one tap to pay, redeem or check offers before that value is gone.",
     image: "/wallet.png",
     callouts: [
-      { text: "Points at risk of expiring unused", top: "20%", side: "left", color: "blue" },
-      { text: "Cards needing attention, flagged automatically", top: "43%", side: "right", color: "dark" },
-      { text: "Unused value sitting on this card", top: "66%", side: "left", color: "purple" },
-      { text: "One tap to pay, redeem or check offers", top: "78%", side: "right", color: "cyan" },
+      { text: "Points at risk of expiring unused", top: "20%", side: "left", color: "blue", targetX: 65 },
+      {
+        text: "Cards needing attention, flagged automatically",
+        top: "43%",
+        side: "right",
+        color: "dark",
+        targetX: 80,
+      },
+      { text: "Unused value sitting on this card", top: "66%", side: "left", color: "purple", targetX: 30 },
+      { text: "One tap to pay, redeem or check offers", top: "78%", side: "right", color: "cyan", targetX: 78 },
     ],
   },
   {
@@ -179,11 +187,15 @@ function CalloutBubble({ callout, index }: { callout: Callout; index: number }) 
 function CalloutConnector({ callout, index }: { callout: Callout; index: number }) {
   const isLeft = callout.side === "left";
   const y = (parseFloat(callout.top) / 100) * PHONE_H + 18;
-  const x1 = isLeft ? 0 : PHONE_W;
+  const targetXPct = callout.targetX ?? (isLeft ? 24 : 76);
+  const x1 = (targetXPct / 100) * PHONE_W;
   const x2 = isLeft ? -38 : PHONE_W + 38;
-  const midX = isLeft ? -14 : PHONE_W + 14;
-  const midX2 = isLeft ? -28 : PHONE_W + 28;
-  const d = `M ${x1} ${y} C ${midX} ${y - 24}, ${midX2} ${y + 22}, ${x2} ${y - 4}`;
+  const dx = x2 - x1;
+  const bend = Math.max(6, Math.min(16, Math.abs(dx) * 0.16));
+  const cx = x1 + dx * 0.5;
+  const cy = y - bend;
+  const y2 = y - 2;
+  const d = `M ${x1} ${y} Q ${cx} ${cy}, ${x2} ${y2}`;
   const stroke = calloutStroke[callout.color];
 
   return (
@@ -204,7 +216,7 @@ function CalloutConnector({ callout, index }: { callout: Callout; index: number 
         animate={{ pathLength: 1 }}
         transition={{ duration: 0.5, delay: 0.05 + index * 0.06, ease: "easeOut" }}
       />
-      <circle cx={x2} cy={y - 4} r={2.5} fill={stroke} />
+      <circle cx={x2} cy={y2} r={2.5} fill={stroke} />
     </motion.g>
   );
 }
