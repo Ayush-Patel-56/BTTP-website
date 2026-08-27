@@ -27,18 +27,18 @@ export default function Footer() {
               <p className="text-xs font-semibold tracking-widest text-white/30 uppercase">Product</p>
               <ul className="mt-4 space-y-3 text-sm text-white/60">
                 <li>
-                  <Link href="/point-calculator" className="hover:text-white">
-                    Point Calculator
+                  <Link href="/#what-we-do" className="hover:text-white">
+                    What We Do
                   </Link>
                 </li>
                 <li>
-                  <Link href="/pricing" className="hover:text-white">
-                    Pricing
+                  <Link href="/#programs" className="hover:text-white">
+                    Programs
                   </Link>
                 </li>
                 <li>
-                  <Link href="/blog" className="hover:text-white">
-                    Blog
+                  <Link href="/#loyalty" className="hover:text-white">
+                    Loyalty
                   </Link>
                 </li>
               </ul>
@@ -47,13 +47,18 @@ export default function Footer() {
               <p className="text-xs font-semibold tracking-widest text-white/30 uppercase">Company</p>
               <ul className="mt-4 space-y-3 text-sm text-white/60">
                 <li>
-                  <Link href="/#what-we-do" className="hover:text-white">
-                    What We Do
+                  <Link href="/#faq" className="hover:text-white">
+                    FAQ
                   </Link>
                 </li>
                 <li>
                   <Link href="/#about-us" className="hover:text-white">
                     About Us
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/#join-waitlist" className="hover:text-white">
+                    Join The Waitlist
                   </Link>
                 </li>
               </ul>
