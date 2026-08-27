@@ -12,6 +12,7 @@ export async function joinWaitlist(
   const firstName = String(formData.get("firstName") ?? "").trim();
   const email = String(formData.get("email") ?? "").trim();
   const phone = String(formData.get("phone") ?? "").trim();
+  const expectation = String(formData.get("message") ?? "").trim();
 
   if (!firstName) {
     return { status: "error", message: "Enter your first name." };
@@ -25,7 +26,7 @@ export async function joinWaitlist(
 
   const webhookUrl = process.env.WAITLIST_SHEET_WEBHOOK_URL;
   if (!webhookUrl) {
-    console.log("Waitlist signup (no webhook configured):", { firstName, email, phone });
+    console.log("Waitlist signup (no webhook configured):", { firstName, email, phone, expectation });
     return { status: "success", message: "You're on the list — we'll be in touch." };
   }
 
@@ -33,7 +34,7 @@ export async function joinWaitlist(
     const response = await fetch(webhookUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ firstName, email, phone }),
+      body: JSON.stringify({ firstName, email, phone, expectation }),
     });
 
     if (!response.ok) {

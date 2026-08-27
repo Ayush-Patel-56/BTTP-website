@@ -75,6 +75,18 @@ export default function Waitlist() {
                 />
               </label>
 
+              <label className="block">
+                <span className="text-sm font-semibold text-white">
+                  What Are You Hoping For? <span className="font-normal text-white/40">(optional)</span>
+                </span>
+                <textarea
+                  name="message"
+                  placeholder="Tell us what you're expecting, or what would actually be useful for you"
+                  rows={3}
+                  className="mt-3 w-full resize-none border-b border-white/20 bg-transparent pb-2.5 text-white placeholder:text-white/30 focus:border-[#FF9F1C] focus:outline-none"
+                />
+              </label>
+
               {state.status === "error" && (
                 <p role="alert" className="text-sm font-medium text-red-400">
                   {state.message}
