@@ -66,9 +66,10 @@ function buildDashArray(totalLength: number, progress: number) {
 export default function IsThisForYou() {
   const containerRef = useRef<HTMLDivElement>(null);
   const dotRefs = useRef<(HTMLSpanElement | null)[]>([]);
+  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
   const pathRefs = useRef<(SVGPathElement | null)[]>([]);
   const pathLengths = useRef<number[]>([]);
-  const dotDocY = useRef<number[]>([]);
+  const itemAnchorY = useRef<number[]>([]);
   const revealedRef = useRef<boolean[]>(items.map((_, i) => i === 0));
   const [segments, setSegments] = useState<string[]>([]);
   const [revealed, setRevealed] = useState<boolean[]>(
@@ -130,9 +131,13 @@ export default function IsThisForYou() {
       pathLengths.current = pathRefs.current.map(
         (path) => path?.getTotalLength() ?? 0
       );
-      dotDocY.current = dotRefs.current.map((dot) => {
-        if (!dot) return 0;
-        const rect = dot.getBoundingClientRect();
+      // Anchored to each item's own container rather than the connector
+      // dot: the dot is hidden below `sm`, and a hidden element's
+      // getBoundingClientRect() is always zero, which broke reveal timing
+      // on mobile entirely.
+      itemAnchorY.current = itemRefs.current.map((item) => {
+        if (!item) return 0;
+        const rect = item.getBoundingClientRect();
         return rect.top + rect.height / 2 + window.scrollY;
       });
     }
@@ -167,17 +172,24 @@ export default function IsThisForYou() {
     let revealedChanged = false;
     const nextRevealed = revealedRef.current.slice();
 
-    pathRefs.current.forEach((path, index) => {
-      const totalLength = pathLengths.current[index];
-      const startY = dotDocY.current[index];
-      const endY = dotDocY.current[index + 1];
-      if (!path || !totalLength || startY === endY) return;
+    // Driven by item-container positions (always laid out) rather than the
+    // connector path/dots (desktop-only decoration, absent on mobile), so
+    // reveal timing works regardless of viewport. The connector dash-array
+    // is still updated when a real path exists.
+    for (let index = 0; index < itemAnchorY.current.length - 1; index++) {
+      const startY = itemAnchorY.current[index];
+      const endY = itemAnchorY.current[index + 1];
+      if (startY === endY) continue;
 
       const rawProgress = (anchorDocY - startY) / (endY - startY);
       const progress = Math.min(1, Math.max(0, rawProgress));
 
-      path.style.strokeDasharray = buildDashArray(totalLength, progress);
-      path.style.markerEnd = progress > 0.97 ? "url(#connector-arrow)" : "none";
+      const path = pathRefs.current[index];
+      const totalLength = pathLengths.current[index];
+      if (path && totalLength) {
+        path.style.strokeDasharray = buildDashArray(totalLength, progress);
+        path.style.markerEnd = progress > 0.97 ? "url(#connector-arrow)" : "none";
+      }
 
       const itemIndex = index + 1;
       if (progress >= 0.92 && !nextRevealed[itemIndex]) {
@@ -187,7 +199,7 @@ export default function IsThisForYou() {
         nextRevealed[itemIndex] = false;
         revealedChanged = true;
       }
-    });
+    }
 
     if (revealedChanged) {
       revealedRef.current = nextRevealed;
@@ -241,6 +253,9 @@ export default function IsThisForYou() {
             return (
               <div
                 key={item.number}
+                ref={(el) => {
+                  itemRefs.current[index] = el;
+                }}
                 style={{ gridRow: index + 1 }}
                 className={`relative transition-all duration-700 ease-out ${
                   alignRight
@@ -267,10 +282,10 @@ export default function IsThisForYou() {
                     {item.number}
                   </span>
                 </div>
-                <h3 className="mt-2 text-4xl leading-tight font-bold text-white sm:text-5xl">
+                <h3 className="mt-2 text-3xl leading-tight font-bold text-white sm:text-5xl">
                   {item.titleTop}
                 </h3>
-                <h3 className="text-4xl leading-tight font-light text-white/60 sm:text-5xl">
+                <h3 className="text-3xl leading-tight font-light text-white/60 sm:text-5xl">
                   {item.titleBottom}
                 </h3>
                 <p className="mt-6 text-white/60">{item.description}</p>

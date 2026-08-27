@@ -11,10 +11,10 @@ export default function Hero() {
       />
       <div className="absolute inset-0 bg-black/20" />
       <div className="relative mx-auto flex max-w-5xl flex-col items-center">
-        <h1 className="hero-reveal text-balance text-5xl leading-tight font-bold tracking-tight text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.45)] sm:text-6xl md:text-7xl">
+        <h1 className="hero-reveal text-balance text-4xl leading-tight font-bold tracking-tight text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.45)] sm:text-6xl md:text-7xl">
           You Wouldn&apos;t Ignore ₹50,000 In Your Bank Account
           <br className="hidden sm:block" />{" "}
-          <span className="sm:whitespace-nowrap sm:text-3xl md:text-4xl lg:text-5xl">
+          <span className="text-3xl sm:whitespace-nowrap md:text-4xl lg:text-5xl">
             Why Ignore It In Loyalty Points?
           </span>
         </h1>
