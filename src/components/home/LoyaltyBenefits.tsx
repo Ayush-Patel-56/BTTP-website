@@ -2,66 +2,49 @@
 
 import { useEffect, useRef, useState } from "react";
 
-interface RedemptionOption {
-  label: string;
-  value: number;
-}
-
 interface Redemption {
   program: string;
+  item: string;
+  cash: number;
   points: number;
-  optionA: RedemptionOption;
-  optionB: RedemptionOption;
+  unit: "points" | "miles";
 }
 
 const redemptions: Redemption[] = [
   {
-    program: "Air India Maharaja",
-    points: 40000,
-    optionA: { label: "Economy return, Dubai", value: 18400 },
-    optionB: { label: "Upgrade existing Dubai booking to Business", value: 34000 },
-  },
-  {
-    program: "British Airways Executive Club",
-    points: 60000,
-    optionA: { label: "Reward flight, Business to London", value: 52200 },
-    optionB: { label: "Cash + points on the same route", value: 21000 },
-  },
-  {
-    program: "Marriott Bonvoy",
-    points: 85000,
-    optionA: { label: "3 nights, Maldives overwater villa", value: 68000 },
-    optionB: { label: "Transferred to airline miles", value: 29750 },
-  },
-  {
-    program: "Hilton Honors",
-    points: 95000,
-    optionA: { label: "4 nights, Bali beach resort", value: 42750 },
-    optionB: { label: "2 nights, Bali overwater suite", value: 57000 },
-  },
-  {
-    program: "Emirates Skywards",
-    points: 65000,
-    optionA: { label: "Business class, Dubai", value: 58500 },
-    optionB: { label: "Economy Dubai + upgrade voucher", value: 26000 },
+    program: "Air India Maharaja Club",
+    item: "Delhi → Singapore, Economy (one-way)",
+    cash: 10710,
+    points: 12000,
+    unit: "points",
   },
   {
     program: "Singapore Airlines KrisFlyer",
-    points: 55000,
-    optionA: { label: "Premium economy, Singapore", value: 33000 },
-    optionB: { label: "Transferred to a hotel partner, 3 nights", value: 44000 },
+    item: "Delhi → Singapore, Business (one-way, Saver)",
+    cash: 65000,
+    points: 46000,
+    unit: "miles",
   },
   {
-    program: "United MileagePlus",
-    points: 45000,
-    optionA: { label: "Economy return, New York", value: 31500 },
-    optionB: { label: "Partner redemption, Business short-haul", value: 49500 },
+    program: "Accor ALL",
+    item: "Novotel New Delhi Aerocity, 1 night",
+    cash: 12000,
+    points: 7000,
+    unit: "points",
   },
   {
-    program: "Qatar Airways Privilege Club",
-    points: 75000,
-    optionA: { label: "Business class, Doha", value: 67500 },
-    optionB: { label: "Hotel stay via partner transfer", value: 30000 },
+    program: "Hilton Honors",
+    item: "Conrad Bengaluru, 4-course dinner for two",
+    cash: 3000,
+    points: 10000,
+    unit: "points",
+  },
+  {
+    program: "IndiGo BluChip",
+    item: "Domestic one-way ticket, peak-demand route",
+    cash: 13500,
+    points: 22000,
+    unit: "points",
   },
 ];
 
@@ -91,72 +74,59 @@ function ArrowButton({
 
 function OptionPanel({
   label,
-  option,
-  isBetter,
+  value,
+  highlight,
+  badge,
 }: {
   label: string;
-  option: RedemptionOption;
-  isBetter: boolean;
+  value: string;
+  highlight: boolean;
+  badge?: string;
 }) {
   return (
     <div
       className={`relative flex flex-1 flex-col justify-between rounded-2xl border-2 p-5 sm:p-6 ${
-        isBetter
-          ? "border-[#FF9F1C] bg-white"
-          : "border-black/10 bg-black/[0.03]"
+        highlight ? "border-[#FF9F1C] bg-white" : "border-black/10 bg-black/[0.03]"
       }`}
     >
-      {isBetter && (
+      {badge && (
         <span className="absolute -top-3 left-5 rounded-full bg-[#FF9F1C] px-3 py-1 text-[10px] font-bold tracking-[0.15em] text-black uppercase">
-          Better value
+          {badge}
         </span>
       )}
-      <div>
-        <p className="text-[11px] font-semibold tracking-[0.2em] text-black/35 uppercase">{label}</p>
-        <p className={`mt-1.5 text-base font-semibold sm:text-lg ${isBetter ? "text-[#141a29]" : "text-black/50"}`}>
-          {option.label}
-        </p>
-      </div>
-      <p className={`mt-6 text-3xl font-bold sm:text-4xl ${isBetter ? "text-[#141a29]" : "text-black/35"}`}>
-        {inr(option.value)}
+      <p className="text-[11px] font-semibold tracking-[0.2em] text-black/35 uppercase">{label}</p>
+      <p className={`mt-6 text-3xl font-bold sm:text-4xl ${highlight ? "text-[#141a29]" : "text-black/50"}`}>
+        {value}
       </p>
     </div>
   );
 }
 
 function ComparisonCard({ entry }: { entry: Redemption }) {
-  const aIsBetter = entry.optionA.value >= entry.optionB.value;
-  const delta = Math.abs(entry.optionA.value - entry.optionB.value);
-
   return (
     <div className="overflow-hidden rounded-3xl bg-[#f7f3ea] shadow-2xl shadow-black/40">
       <div className="p-6 sm:p-10">
-        <div className="flex items-start justify-between gap-4">
-          <div>
-            <p className="text-[11px] font-semibold tracking-[0.25em] text-black/40 uppercase">
-              Loyalty Program
-            </p>
-            <p className="mt-1 text-xl font-bold text-[#141a29] sm:text-2xl">{entry.program}</p>
-          </div>
-          <div className="text-right">
-            <p className="text-[11px] font-semibold tracking-[0.25em] text-black/40 uppercase">
-              Points
-            </p>
-            <p className="mt-1 text-xl font-bold text-[#FF9F1C] sm:text-2xl">
-              {entry.points.toLocaleString()}
-            </p>
-          </div>
+        <div>
+          <p className="text-[11px] font-semibold tracking-[0.25em] text-black/40 uppercase">
+            {entry.program}
+          </p>
+          <p className="mt-1 text-xl font-bold text-[#141a29] sm:text-2xl">{entry.item}</p>
         </div>
 
         <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-          <OptionPanel label="Option A" option={entry.optionA} isBetter={aIsBetter} />
-          <OptionPanel label="Option B" option={entry.optionB} isBetter={!aIsBetter} />
+          <OptionPanel label="Pay Cash" value={inr(entry.cash)} highlight={false} />
+          <OptionPanel
+            label="Redeem Points"
+            value={`${entry.points.toLocaleString()} ${entry.unit}`}
+            highlight
+            badge="Use Points"
+          />
         </div>
       </div>
 
       <div className="border-t border-dashed border-black/10 bg-black/[0.03] px-6 py-4 text-center sm:px-10">
         <p className="text-sm font-semibold text-[#141a29]">
-          Same {entry.points.toLocaleString()} points, {inr(delta)} apart.
+          Same trip, {entry.points.toLocaleString()} {entry.unit} instead of {inr(entry.cash)}.
         </p>
       </div>
     </div>
