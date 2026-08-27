@@ -34,10 +34,10 @@ const items = [
   },
   {
     number: "05",
-    titleTop: "You Don't Know How To",
-    titleBottom: "Fly Business On Points",
+    titleTop: "Business Class Feels",
+    titleBottom: "Out Of Reach",
     description:
-      "You've watched other people do it and figured it takes connections or luck. It really just takes knowing the system.",
+      "You've watched other people fly business on points and assumed it takes connections or luck. It really just takes knowing the system.",
   },
 ];
 
