@@ -331,7 +331,7 @@ export default function AiSection() {
       <div className="relative z-10 mt-10 lg:hidden">
         <FeatureTabs activeIndex={mobileIndex} onSelect={setMobileIndex} />
 
-        <div className="mt-12 flex flex-col items-center">
+        <div className="mt-8 flex flex-col items-center">
           <AnimatePresence mode="wait">
             <motion.div
               key={mobileActive.title}
@@ -341,12 +341,12 @@ export default function AiSection() {
               transition={{ duration: 0.25 }}
               className="flex flex-col items-center"
             >
-              <PhoneFrame image={mobileActive.image} title={mobileActive.title} className="w-[220px]" />
-              <div className="mt-6 flex flex-wrap justify-center gap-2 px-4">
+              <PhoneFrame image={mobileActive.image} title={mobileActive.title} className="w-[170px]" />
+              <div className="mt-4 flex max-w-[280px] flex-wrap justify-center gap-1.5">
                 {mobileActive.callouts.map((callout) => (
                   <span
                     key={callout.text}
-                    className={`rounded-full px-3 py-1.5 text-xs font-medium ${calloutColors[callout.color]}`}
+                    className={`rounded-full px-2.5 py-1 text-[11px] font-medium ${calloutColors[callout.color]}`}
                   >
                     {callout.text}
                   </span>
@@ -356,7 +356,7 @@ export default function AiSection() {
           </AnimatePresence>
         </div>
 
-        <div className="relative z-10 mx-auto mt-10 max-w-xl px-6 text-center">
+        <div className="relative z-10 mx-auto mt-8 max-w-xl px-6 text-center">
           <h3 className="text-xl font-semibold text-white">{mobileActive.title}</h3>
           <p className="mt-2 text-white/60">{mobileActive.description}</p>
         </div>
