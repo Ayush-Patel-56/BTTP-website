@@ -1,4 +1,4 @@
-function TagIcon({ className }: { className?: string }) {
+function LayersIcon({ className }: { className?: string }) {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -9,13 +9,14 @@ function TagIcon({ className }: { className?: string }) {
       strokeLinejoin="round"
       className={className}
     >
-      <path d="M12.6 2H4a2 2 0 0 0-2 2v8.6a2 2 0 0 0 .59 1.41l9.4 9.4a2 2 0 0 0 2.82 0l6.6-6.6a2 2 0 0 0 0-2.82l-9.4-9.4A2 2 0 0 0 12.6 2Z" />
-      <circle cx="7.5" cy="7.5" r="1.5" fill="currentColor" stroke="none" />
+      <path d="M12 2 2 7l10 5 10-5-10-5Z" />
+      <path d="M2 12l10 5 10-5" />
+      <path d="M2 17l10 5 10-5" />
     </svg>
   );
 }
 
-function ClockIcon({ className }: { className?: string }) {
+function TargetIcon({ className }: { className?: string }) {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -27,7 +28,8 @@ function ClockIcon({ className }: { className?: string }) {
       className={className}
     >
       <circle cx="12" cy="12" r="9" />
-      <path d="M12 7v5l3.5 2" />
+      <circle cx="12" cy="12" r="5" />
+      <circle cx="12" cy="12" r="1" fill="currentColor" stroke="none" />
     </svg>
   );
 }
@@ -42,18 +44,21 @@ function PlaneIcon({ className }: { className?: string }) {
 
 const pillars = [
   {
-    title: "Know What It's Worth",
-    description: "You always know what your points are worth. No hidden math, no guesswork.",
-    Icon: TagIcon,
+    title: "Every Point, One Place",
+    description:
+      "Link your cards and loyalty programs once. Every point you've earned shows up together instead of scattered across a dozen apps and logins.",
+    Icon: LayersIcon,
   },
   {
-    title: "We Track The Details",
-    description: "We watch your balances and expiry dates in the background so you don't have to.",
-    Icon: ClockIcon,
+    title: "The Right Card, Every Time",
+    description:
+      "We flag when you're about to use the wrong card for a purchase, so you stop earning less than you should on spends you're already making.",
+    Icon: TargetIcon,
   },
   {
-    title: "Bookable, Not Just Visible",
-    description: "Suggestions are tied to real flights and hotel nights, things you can actually book.",
+    title: "Redeem For Real Value",
+    description:
+      "When it's time to cash in, we compare your redemption options and point you to the one where the same points get you further.",
     Icon: PlaneIcon,
   },
 ];
