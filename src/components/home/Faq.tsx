@@ -117,7 +117,10 @@ export default function Faq() {
       <div className="mx-auto max-w-3xl">
         <div className="text-center">
           <p className="section-eyebrow">Ask BTTP</p>
-          <h2 className="section-title text-black">
+          <h2
+            className="section-title text-black whitespace-nowrap tracking-tight"
+            style={{ fontSize: "clamp(1.05rem, 4.5vw, 3rem)" }}
+          >
             Got questions? Our AI has answers
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-black/50">
