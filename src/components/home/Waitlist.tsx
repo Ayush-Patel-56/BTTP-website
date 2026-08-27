@@ -65,13 +65,12 @@ export default function Waitlist() {
               </label>
 
               <label className="block">
-                <span className="text-sm font-semibold text-white">
-                  Phone Number <span className="font-normal text-white/40">(optional)</span>
-                </span>
+                <span className="text-sm font-semibold text-white">Phone Number</span>
                 <input
                   type="tel"
                   name="phone"
                   placeholder="Enter your phone number here"
+                  required
                   className="mt-3 w-full border-b border-white/20 bg-transparent pb-2.5 text-white placeholder:text-white/30 focus:border-[#FF9F1C] focus:outline-none"
                 />
               </label>

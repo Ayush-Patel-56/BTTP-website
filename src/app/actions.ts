@@ -19,7 +19,7 @@ export async function joinWaitlist(
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return { status: "error", message: "Enter a valid email address." };
   }
-  if (phone && !/^[0-9+\-\s()]{7,}$/.test(phone)) {
+  if (!/^[0-9+\-\s()]{7,}$/.test(phone)) {
     return { status: "error", message: "Enter a valid phone number." };
   }
 
